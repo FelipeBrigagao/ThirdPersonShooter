@@ -13,7 +13,7 @@ public class CharacterMovement : MonoBehaviour
 
     float horizontalInput;
     float verticalInput;
-    float speed = 10f;
+    float speed = 7f;
 
     // Start is called before the first frame update
     void Start()
