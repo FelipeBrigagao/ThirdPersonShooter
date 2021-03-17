@@ -10,15 +10,34 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     Camera cam;
 
-
     float horizontalInput;
     float verticalInput;
-    float speed = 7f;
+
+    float speed;
+    float runningSpeed = 10f;
+    float walkingSpeed = 5f;
+    
+    [SerializeField]
+    float turnSpeed = 0.15f;
+
+
+    float dirAngle;
+    float smoothDirAngle;
+
+    Vector3 direction;
+    Vector3 moveDirection;
+    Vector3 velocity;
+    Vector3 moveAmount;
+
+    bool running = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        speed = walkingSpeed;
+
     }
 
     // Update is called once per frame
@@ -27,25 +46,39 @@ public class CharacterMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !running)
+        {
+            speed = runningSpeed;
+            running = true;
+
+        }else if(Input.GetKeyUp(KeyCode.LeftShift) && running)
+        {
+            speed = walkingSpeed;
+            running = false;
+
+        }
+
     }
 
 
     private void FixedUpdate()
     {
-        Vector3 direction = new Vector3(horizontalInput, 0, verticalInput).normalized;
+        direction = new Vector3(horizontalInput, 0, verticalInput).normalized;
 
-        float dirAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
+        dirAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
 
-        Vector3 moveDirection = Quaternion.Euler(Vector3.up * dirAngle) * Vector3.forward;
+        smoothDirAngle = Mathf.LerpAngle(transform.eulerAngles.y, dirAngle, turnSpeed);
 
-        Vector3 velocity = moveDirection * speed;
+        moveDirection = Quaternion.Euler(Vector3.up * dirAngle) * Vector3.forward;
 
-        Vector3 moveAmount = velocity * Time.fixedDeltaTime;
+        velocity = moveDirection * speed;
+
+        moveAmount = velocity * Time.fixedDeltaTime;
 
         if(direction.magnitude >= 0.01f)
         {
             rb.MovePosition(transform.position + moveAmount);
-            rb.MoveRotation(Quaternion.Euler(Vector3.up * dirAngle));
+            rb.MoveRotation(Quaternion.Euler(Vector3.up * smoothDirAngle));
 
         }
 
