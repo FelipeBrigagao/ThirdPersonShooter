@@ -36,7 +36,7 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-        speed = walkingSpeed;
+        speed = 0;
 
     }
 
@@ -46,25 +46,21 @@ public class CharacterMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !running)
-        {
-            speed = runningSpeed;
-            running = true;
+        direction = new Vector3(horizontalInput, 0, verticalInput).normalized;
 
-        }else if(Input.GetKeyUp(KeyCode.LeftShift) && running)
-        {
-            speed = walkingSpeed;
-            running = false;
+        //ver se está correndo
 
-        }
+
+
+
+
 
     }
 
 
     private void FixedUpdate()
     {
-        direction = new Vector3(horizontalInput, 0, verticalInput).normalized;
-
+       
         dirAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
 
         smoothDirAngle = Mathf.LerpAngle(transform.eulerAngles.y, dirAngle, turnSpeed);
@@ -81,6 +77,33 @@ public class CharacterMovement : MonoBehaviour
             rb.MoveRotation(Quaternion.Euler(Vector3.up * smoothDirAngle));
 
         }
+
+
+    }
+
+
+    void ChangeSpeed()
+    {
+
+        if(direction.magnitude >= 0.01)
+        {
+
+            //lerp até a velocidade de andando
+
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                //lerp até a velocidade de correndo
+            }else if ()
+            {
+                //lerp até a velocidade de andando
+            }
+
+
+        }else if ()
+        {
+            //lerp até a velocidade de parado
+        }
+
 
 
     }
