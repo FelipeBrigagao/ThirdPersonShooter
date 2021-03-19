@@ -14,11 +14,16 @@ public class CharacterMovement : MonoBehaviour
     float verticalInput;
 
     float speed;
+
+    float finalSpeed;
+    float idleSpeed = 0f;
     float runningSpeed = 10f;
-    float walkingSpeed = 5f;
+    float walkingSpeed = 4.5f;
     
     [SerializeField]
     float turnSpeed = 0.15f;
+    [SerializeField]
+    float changeSpeedSmoother = 0.2f;
 
 
     float dirAngle;
@@ -31,12 +36,15 @@ public class CharacterMovement : MonoBehaviour
 
     bool running = false;
 
+    Animator anim;
+
 
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-        speed = 0;
+        anim = this.GetComponent<Animator>();
+        speed = idleSpeed;
 
     }
 
@@ -50,9 +58,9 @@ public class CharacterMovement : MonoBehaviour
 
         //ver se está correndo
 
+        ChangeSpeed();
 
-
-
+        anim.SetFloat("Speed", speed);
 
 
     }
@@ -60,8 +68,12 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-       
-        dirAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
+
+        if (direction.magnitude >= 0.01f)
+        {
+            dirAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
+
+        }
 
         smoothDirAngle = Mathf.LerpAngle(transform.eulerAngles.y, dirAngle, turnSpeed);
 
@@ -71,13 +83,10 @@ public class CharacterMovement : MonoBehaviour
 
         moveAmount = velocity * Time.fixedDeltaTime;
 
-        if(direction.magnitude >= 0.01f)
-        {
-            rb.MovePosition(transform.position + moveAmount);
-            rb.MoveRotation(Quaternion.Euler(Vector3.up * smoothDirAngle));
+        
+        rb.MovePosition(transform.position + moveAmount);
 
-        }
-
+        rb.MoveRotation(Quaternion.Euler(Vector3.up * smoothDirAngle));
 
     }
 
@@ -85,25 +94,26 @@ public class CharacterMovement : MonoBehaviour
     void ChangeSpeed()
     {
 
-        if(direction.magnitude >= 0.01)
+        if (direction.magnitude >= 0.01)
         {
 
-            //lerp até a velocidade de andando
-
-            if (Input.GetKeyDown(KeyCode.LeftControl))
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                //lerp até a velocidade de correndo
-            }else if ()
+                finalSpeed = runningSpeed;
+            }
+            else
             {
-                //lerp até a velocidade de andando
+                finalSpeed = walkingSpeed;
             }
 
-
-        }else if ()
+        }
+        else
         {
-            //lerp até a velocidade de parado
+            finalSpeed = idleSpeed;
         }
 
+
+        speed = Mathf.Lerp(speed, finalSpeed, changeSpeedSmoother);
 
 
     }
