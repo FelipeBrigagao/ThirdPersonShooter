@@ -6,7 +6,7 @@ public class CharacterMovement : MonoBehaviour
 {
 
     Rigidbody rb;
-    
+
     [SerializeField]
     Camera cam;
 
@@ -17,13 +17,21 @@ public class CharacterMovement : MonoBehaviour
 
     float finalSpeed;
     float idleSpeed = 0f;
+
+    [SerializeField]
     float runningSpeed = 10f;
+   
+    [SerializeField]
     float walkingSpeed = 4.5f;
     
     [SerializeField]
     float turnSpeed = 0.15f;
+
+    float speedSmoother;
     [SerializeField]
-    float changeSpeedSmoother = 0.2f;
+    float increasingSpeedSmoother = 0.2f;
+    [SerializeField]
+    float decreasingSpeedSmoother = 0.2f;
 
 
     float dirAngle;
@@ -34,7 +42,7 @@ public class CharacterMovement : MonoBehaviour
     Vector3 velocity;
     Vector3 moveAmount;
 
-    bool running = false;
+    bool idle = true;
 
     Animator anim;
 
@@ -60,8 +68,8 @@ public class CharacterMovement : MonoBehaviour
 
         ChangeSpeed();
 
+        anim.SetBool("Idle", idle);
         anim.SetFloat("Speed", speed);
-
 
     }
 
@@ -94,31 +102,40 @@ public class CharacterMovement : MonoBehaviour
     void ChangeSpeed()
     {
 
-        if (direction.magnitude >= 0.01)
+        if(direction.magnitude >= 0.1f )
         {
+            idle = false;
 
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                finalSpeed = runningSpeed;
-            }
-            else
+            if (!Input.GetKey(KeyCode.LeftShift))
             {
                 finalSpeed = walkingSpeed;
+
+                if (speed < (walkingSpeed - 0.1f))
+                {
+                    speedSmoother = increasingSpeedSmoother;
+
+                }else if(speed > (walkingSpeed + 0.1f))
+                {
+                    speedSmoother = decreasingSpeedSmoother;
+
+                }
+
+            }else if (Input.GetKey(KeyCode.LeftShift))
+            {
+                finalSpeed = runningSpeed;
+                speedSmoother = increasingSpeedSmoother;
             }
 
-        }
-        else
+        }else if (direction.magnitude < 0.1f)
         {
+            idle = true;
+
             finalSpeed = idleSpeed;
+            speedSmoother = decreasingSpeedSmoother;
         }
 
-
-        speed = Mathf.Lerp(speed, finalSpeed, changeSpeedSmoother);
-
+        speed = Mathf.Lerp(speed, finalSpeed, speedSmoother);
 
     }
-
-
-
 
 }
