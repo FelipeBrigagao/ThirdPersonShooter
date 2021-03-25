@@ -19,10 +19,10 @@ public class CharacterMovement : MonoBehaviour
     float runningSpeed = 10f;
    
     [SerializeField]
-    float walkingSpeed = 4.5f;
+    float walkingSpeed = 3f;
 
     [SerializeField]
-    float armedWalkSpeed = 3f;
+    float armedWalkSpeed = 7f;
     
     [SerializeField]
     float turnSpeed = 0.15f;
@@ -65,16 +65,18 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
-    void Update()
+    void Update()                       
     {
-        inputs.x = Input.GetAxisRaw("Horizontal");
+        inputs.x = Input.GetAxisRaw("Horizontal");                                          //Pega as entradas do teclado 
         inputs.y = Input.GetAxisRaw("Vertical");
 
-        direction = new Vector3(inputs.x, 0, inputs.y).normalized;
+        direction = new Vector3(inputs.x, 0, inputs.y).normalized;                  //Faz o vetor de direção com as entradas recebidas
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T))                                                   //Teste para trocar entre armado e desarmado
         {
             armed = !armed;
+
+            Debug.Log(armed);
 
             anim.SetBool("Armed", armed);
         }
@@ -84,11 +86,11 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        Move();                                                                                                     //Como a movimentação é igual para armado e desarmado há um método para isso
 
-        if (armed && (actualState != ArmedState))
+        if (armed && (actualState != ArmedState))                                                       //Verifica se o estado atual é o armado e se o delegate já está com o método para esse estado armazenado nele
         {
-            actualState = ArmedState;
+            actualState = ArmedState;                                                                       //Se o estado é o armado mas o actualState não está com o ArmedState, esse é atribuido ao estado atual
 
         }else if (!armed && (actualState != UnnarmedState))
         {
@@ -150,7 +152,16 @@ public class CharacterMovement : MonoBehaviour
 
     void ChangeArmedSpeed()
     {
-        speed = armedWalkSpeed;
+
+        if(direction.magnitude >= 0.1f)
+        {
+            speed = armedWalkSpeed;
+
+        }
+        else
+        {
+            speed = idleSpeed;
+        }
 
     }
 
