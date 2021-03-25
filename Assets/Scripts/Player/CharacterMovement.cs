@@ -35,11 +35,15 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     float decreasingSpeedSmoother = 0.1f;
 
+    [SerializeField]
+    float animInputSmoother = 0.1f;
+
 
     float dirAngle;
     float smoothDirAngle;
 
     Vector2 inputs;
+    Vector2 animInputs;
     Vector3 direction;
     Vector3 moveDirection;
     Vector3 velocity;
@@ -61,6 +65,7 @@ public class CharacterMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         speed = idleSpeed;
+        animInputs = Vector2.zero;
 
     }
 
@@ -128,8 +133,10 @@ public class CharacterMovement : MonoBehaviour
     {
         //ver se está correndo
 
-        anim.SetFloat("Input_x", inputs.x);
-        anim.SetFloat("Input_y", inputs.y);
+        animInputs = Vector2.Lerp(animInputs, inputs, animInputSmoother);
+
+        anim.SetFloat("Input_x", animInputs.x);
+        anim.SetFloat("Input_y", animInputs.y);
 
         ChangeArmedSpeed();
 

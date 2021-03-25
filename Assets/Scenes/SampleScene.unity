@@ -410,6 +410,7 @@ MonoBehaviour:
   cam: {fileID: 963194227}
   runningSpeed: 10
   walkingSpeed: 3
+  armedWalkSpeed: 3
   turnSpeed: 0.15
   increasingSpeedSmoother: 0.04
   decreasingSpeedSmoother: 0.1
@@ -699,7 +700,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.008732423, y: 0.000000009740862, z: 8.5064546e-11, w: 0.9999619}
+  m_LocalRotation: {x: -0.008732423, y: 0.000000006558845, z: 5.7276794e-11, w: 0.9999619}
   m_LocalPosition: {x: 214.44823, y: 1.891865, z: 101.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -806,7 +807,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1334561945}
-  m_LocalRotation: {x: 0.033575386, y: 0.00000001719668, z: -5.777108e-10, w: 0.9994362}
+  m_LocalRotation: {x: 0.033575404, y: -0.00000001719668, z: 5.777111e-10, w: 0.9994362}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -956,7 +957,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1571646775}
-  m_LocalRotation: {x: -0.00072840275, y: 0.000000001834342, z: 1.3361402e-12, w: 0.99999976}
+  m_LocalRotation: {x: -0.00072840287, y: -0.0000000017614334, z: -1.2830335e-12,
+    w: 0.99999976}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
