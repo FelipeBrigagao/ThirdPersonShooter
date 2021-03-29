@@ -16,7 +16,9 @@ public class CameraManager : MonoBehaviour
     Vector3 disarmedOffset;
 
     [SerializeField]
-    float changeCamPositionSmoother = 1f;
+    float changeCamPositionSmoother = 5f;
+
+    bool armed;
 
     private void Start()
     {
@@ -27,6 +29,8 @@ public class CameraManager : MonoBehaviour
 
         cineCamOffset.m_Offset = disarmedOffset;
 
+        armed = false;
+
         PlayerManager.OnEquipWeapon += ChangePerpective;
 
     }
@@ -36,6 +40,9 @@ public class CameraManager : MonoBehaviour
 
     private void ChangePerpective(bool armedState)
     {
+
+        armed = armedState;
+
         if (armedState)
         {
             StartCoroutine(ChangeToArmedOffset());
@@ -52,7 +59,7 @@ public class CameraManager : MonoBehaviour
 
     IEnumerator ChangeToArmedOffset()
     {
-        while (cineCamOffset.m_Offset != armedOffset)
+        while (cineCamOffset.m_Offset != armedOffset && armed)
         {
             cineCamOffset.m_Offset = Vector3.Lerp(cineCamOffset.m_Offset, armedOffset, changeCamPositionSmoother * Time.deltaTime);    
 
@@ -63,7 +70,7 @@ public class CameraManager : MonoBehaviour
 
     IEnumerator ChangeToDisarmedOffset()
     {
-        while (cineCamOffset.m_Offset != disarmedOffset)
+        while (cineCamOffset.m_Offset != disarmedOffset && !armed)
         {
             cineCamOffset.m_Offset = Vector3.Lerp(cineCamOffset.m_Offset, disarmedOffset, changeCamPositionSmoother * Time.deltaTime);
 

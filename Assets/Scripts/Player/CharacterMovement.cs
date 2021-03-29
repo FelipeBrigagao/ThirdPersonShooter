@@ -124,7 +124,7 @@ public class CharacterMovement : MonoBehaviour
     void ArmedState()
     {
 
-        animInputs = Vector2.Lerp(animInputs, inputs, animInputSmoother);       //Pega inputs para a animação de armado, pois o input para a movimentação não tem os valores intermediários de -1 -> 0 -> 1
+        animInputs = Vector2.Lerp(animInputs, inputs, animInputSmoother * Time.deltaTime);       //Pega inputs para a animação de armado, pois o input para a movimentação não tem os valores intermediários de -1 -> 0 -> 1
 
         anim.SetFloat("Input_x", animInputs.x);
         anim.SetFloat("Input_y", animInputs.y);
@@ -144,7 +144,7 @@ public class CharacterMovement : MonoBehaviour
         //Verifica se está correndo
         ChangeUnarmedSpeed();
 
-        smoothDirAngle = Mathf.LerpAngle(transform.eulerAngles.y, dirAngle, turnSpeed);
+        smoothDirAngle = Mathf.LerpAngle(transform.eulerAngles.y, dirAngle, turnSpeed * Time.deltaTime);
 
         rb.MoveRotation(Quaternion.Euler(Vector3.up * smoothDirAngle));                                                     
 
@@ -203,7 +203,7 @@ public class CharacterMovement : MonoBehaviour
             speedSmoother = decreasingSpeedSmoother;
         }
 
-        speed = Mathf.Lerp(speed, finalSpeed, speedSmoother);
+        speed = Mathf.Lerp(speed, finalSpeed, speedSmoother * Time.deltaTime);
 
     }
 
