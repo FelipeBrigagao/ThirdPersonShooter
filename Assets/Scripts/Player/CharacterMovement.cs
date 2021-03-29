@@ -50,8 +50,8 @@ public class CharacterMovement : MonoBehaviour
     Vector3 moveAmount;
 
     bool idle = true;
-    bool armed = false;
 
+    bool armed = false;
 
     private delegate void ChangeStates();
     private ChangeStates actualState;
@@ -67,6 +67,8 @@ public class CharacterMovement : MonoBehaviour
         speed = idleSpeed;
         animInputs = Vector2.zero;
 
+        PlayerManager.OnEquipWeapon += ChangeArmedState;
+
     }
 
 
@@ -77,14 +79,6 @@ public class CharacterMovement : MonoBehaviour
 
         direction = new Vector3(inputs.x, 0, inputs.y).normalized;                  //Faz o vetor de direção com as entradas recebidas
 
-        if (Input.GetKeyDown(KeyCode.T))                                                   //Teste para trocar entre armado e desarmado
-        {
-            armed = !armed;
-
-            Debug.Log(armed);
-
-            anim.SetBool("Armed", armed);
-        }
 
     }
 
@@ -103,20 +97,18 @@ public class CharacterMovement : MonoBehaviour
 
         }
 
-        actualState?.Invoke();
+        actualState?.Invoke();                          //Se tiver algo no delegate actualState esse é chamado, chamando o armed ou o unnarmed
 
     }
 
 
-    private void Move()
+    private void Move()                                                                                                                     // Movimentação do personagem 
     {
         if (direction.magnitude >= 0.01f)
         {
             dirAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
 
         }
-
-        smoothDirAngle = Mathf.LerpAngle(transform.eulerAngles.y, dirAngle, turnSpeed);
 
         moveDirection = Quaternion.Euler(Vector3.up * dirAngle) * Vector3.forward;
 
@@ -131,16 +123,17 @@ public class CharacterMovement : MonoBehaviour
 
     void ArmedState()
     {
-        //ver se está correndo
 
-        animInputs = Vector2.Lerp(animInputs, inputs, animInputSmoother);
+        animInputs = Vector2.Lerp(animInputs, inputs, animInputSmoother);       //Pega inputs para a animação de armado, pois o input para a movimentação não tem os valores intermediários de -1 -> 0 -> 1
 
         anim.SetFloat("Input_x", animInputs.x);
         anim.SetFloat("Input_y", animInputs.y);
 
+
+        //Verifica se está andando
         ChangeArmedSpeed();
 
-        rb.MoveRotation(Quaternion.Euler(cam.transform.eulerAngles.y * Vector3.up));
+        rb.MoveRotation(Quaternion.Euler(cam.transform.eulerAngles.y * Vector3.up));  //A rotação para a animação de armado é sempre olhando para a camera
     }
 
     void UnnarmedState()
@@ -148,11 +141,12 @@ public class CharacterMovement : MonoBehaviour
         anim.SetBool("Idle", idle);
         anim.SetFloat("Speed", speed);
 
-        //ver se está correndo
-
+        //Verifica se está correndo
         ChangeUnarmedSpeed();
 
-        rb.MoveRotation(Quaternion.Euler(Vector3.up * smoothDirAngle));
+        smoothDirAngle = Mathf.LerpAngle(transform.eulerAngles.y, dirAngle, turnSpeed);
+
+        rb.MoveRotation(Quaternion.Euler(Vector3.up * smoothDirAngle));                                                     
 
     }
     
@@ -211,6 +205,23 @@ public class CharacterMovement : MonoBehaviour
 
         speed = Mathf.Lerp(speed, finalSpeed, speedSmoother);
 
+    }
+
+    void ChangeArmedState(bool armedState)
+    {
+        armed = armedState;
+
+        anim.SetBool("Armed", armed);
+
+        
+    }
+
+
+
+    private void OnDisable()
+    {
+
+        PlayerManager.OnEquipWeapon -= ChangeArmedState;
     }
 
 }
