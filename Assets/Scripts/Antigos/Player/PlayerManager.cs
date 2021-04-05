@@ -13,6 +13,8 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         armed = false;
+
+        CallEquipWeaponEvent();
     }
 
     private void Update()
