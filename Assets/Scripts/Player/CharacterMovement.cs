@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AntigoCharacterMovement : MonoBehaviour
+public class CharacterMovement : MonoBehaviour
 {
 
     Rigidbody rb;
@@ -78,6 +78,7 @@ public class AntigoCharacterMovement : MonoBehaviour
         inputs.y = Input.GetAxisRaw("Vertical");
 
         direction = new Vector3(inputs.x, 0, inputs.y).normalized;                  //Faz o vetor de direção com as entradas recebidas
+
 
     }
 
