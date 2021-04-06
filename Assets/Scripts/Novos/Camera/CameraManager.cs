@@ -22,7 +22,7 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        armedOffset = new Vector3(0.45f, 0.1f, 2f);
+        armedOffset = new Vector3(0.45f, 0.1f, 1f);
         disarmedOffset = new Vector3(0, 0, 0);
 
         cineCamOffset = thirdPersonCam.GetComponent<CinemachineCameraOffset>();
