@@ -14,7 +14,8 @@ public class CharacterAnimation : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        Player.OnEquipWeapon += ChangeArmedState;
+        PlayerManager.OnEquipWeapon += ChangeArmedState;
+
 
     }
 
@@ -54,7 +55,7 @@ public class CharacterAnimation : MonoBehaviour
     private void OnDisable()
     {
 
-        Player.OnEquipWeapon -= ChangeArmedState;
+        PlayerManager.OnEquipWeapon -= ChangeArmedState;
     }
 
 }

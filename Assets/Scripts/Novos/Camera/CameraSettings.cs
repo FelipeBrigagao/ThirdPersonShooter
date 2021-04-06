@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+public class CameraSettings : MonoBehaviour
 {
+
+
     [SerializeField]
     Camera mainCamera;
 
@@ -29,7 +31,7 @@ public class CameraManager : MonoBehaviour
 
         cineCamOffset.m_Offset = disarmedOffset;
 
-        Player.OnEquipWeapon += ChangePerspective;
+        PlayerManager.OnEquipWeapon += ChangePerspective;
 
     }
 

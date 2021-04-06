@@ -8,12 +8,38 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        inputs = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        MoveInput();
 
-        GetComponent<Player>().actualMode.SetInput(inputs);
+
+        AimInput();
+
+
 
     }
 
+
+    void MoveInput()
+    {
+        inputs = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        GetComponent<PlayerManager>().actualMode.SetInput(inputs);
+    }
+
+
+    void AimInput()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            PlayerManager.Instance.CallChangeEquipState(true);
+
+        }else if (Input.GetMouseButtonUp(1))
+        {
+            PlayerManager.Instance.CallChangeEquipState(false);
+
+        }
+
+
+    }
 
 
 }

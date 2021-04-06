@@ -67,7 +67,7 @@ public class AntigoCharacterMovement : MonoBehaviour
         speed = idleSpeed;
         animInputs = Vector2.zero;
 
-        PlayerManager.OnEquipWeapon += ChangeArmedState;
+        PlayerManagerOld.OnEquipWeapon += ChangeArmedState;
 
     }
 
@@ -220,7 +220,7 @@ public class AntigoCharacterMovement : MonoBehaviour
     private void OnDisable()
     {
 
-        PlayerManager.OnEquipWeapon -= ChangeArmedState;
+        PlayerManagerOld.OnEquipWeapon -= ChangeArmedState;
     }
 
 }
