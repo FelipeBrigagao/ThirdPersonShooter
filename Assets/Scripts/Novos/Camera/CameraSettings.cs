@@ -13,8 +13,11 @@ public class CameraSettings : MonoBehaviour
     GameObject thirdPersonCam;
 
     CinemachineCameraOffset cineCamOffset;
-    
+
+    [SerializeField]
     Vector3 armedOffset;
+
+    [SerializeField]
     Vector3 disarmedOffset;
 
     [SerializeField]
@@ -24,14 +27,14 @@ public class CameraSettings : MonoBehaviour
 
     private void Start()
     {
-        armedOffset = new Vector3(0.45f, 0.1f, 1f);
+        armedOffset = new Vector3(0.6f, 0.1f, 1f);
         disarmedOffset = new Vector3(0, 0, 0);
 
         cineCamOffset = thirdPersonCam.GetComponent<CinemachineCameraOffset>();
 
         cineCamOffset.m_Offset = disarmedOffset;
 
-        PlayerManager.OnEquipWeapon += ChangePerspective;
+        PlayerManager.OnAimWeapon += ChangePerspective;
 
     }
 
@@ -82,7 +85,7 @@ public class CameraSettings : MonoBehaviour
     private void OnDisable()
     {
 
-        PlayerManager.OnEquipWeapon -= ChangePerspective;
+        PlayerManager.OnAimWeapon -= ChangePerspective;
     }
 
 

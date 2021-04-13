@@ -19,7 +19,7 @@ public class CharacterMovementArmed : MonoBehaviour, ICharacterMovement
     float speed;
 
     [SerializeField]
-    float armedWalkSpeed = 10f;
+    float armedWalkSpeed = 2.5f;
     private float idleSpeed = 0f;
 
     private void Start()

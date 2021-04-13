@@ -51,11 +51,11 @@ public class PlayerManager : MonoBehaviour
 
 
 
-    public static event Action<bool> OnEquipWeapon;
+    public static event Action<bool> OnAimWeapon;
 
-    public void CallChangeEquipState(bool state)
+    public void CallChangeAimState(bool state)
     {
-        OnEquipWeapon?.Invoke(state);
+        OnAimWeapon?.Invoke(state);
     }
 
 
@@ -71,11 +71,11 @@ public class PlayerManager : MonoBehaviour
         cma = GetComponent<CharacterMovementArmed>();
         cmu = GetComponent<CharacterMovementUnnarmed>();
 
-        OnEquipWeapon += ChangeStates;
+        OnAimWeapon += ChangeStates;
 
         actualMode = cmu;
     }
-
+     
     private void Update()
     {
 
@@ -104,7 +104,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnDisable()
     {
-        OnEquipWeapon -= ChangeStates;
+        OnAimWeapon -= ChangeStates;
     }
 
 

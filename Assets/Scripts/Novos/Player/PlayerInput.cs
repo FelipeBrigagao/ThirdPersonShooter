@@ -10,10 +10,7 @@ public class PlayerInput : MonoBehaviour
     {
         MoveInput();
 
-
-        AimInput();
-
-
+        ChangeWeapon();
 
     }
 
@@ -25,21 +22,17 @@ public class PlayerInput : MonoBehaviour
         GetComponent<PlayerManager>().actualMode.SetInput(inputs);
     }
 
-
-    void AimInput()
+    void ChangeWeapon()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            PlayerManager.Instance.CallChangeEquipState(true);
-
-        }else if (Input.GetMouseButtonUp(1))
+            WeaponManager.Instance.ChangeEquipedWeapon(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            PlayerManager.Instance.CallChangeEquipState(false);
-
+            WeaponManager.Instance.ChangeEquipedWeapon(1);
         }
 
-
     }
-
 
 }
