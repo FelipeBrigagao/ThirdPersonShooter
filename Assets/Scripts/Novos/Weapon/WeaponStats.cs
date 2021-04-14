@@ -10,6 +10,9 @@ public class WeaponStats : MonoBehaviour
     public void Shoot()
     {
 
+        Debug.Log(weapon.name + " atirando");
+
+
     }
 
 

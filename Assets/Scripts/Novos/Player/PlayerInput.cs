@@ -12,6 +12,13 @@ public class PlayerInput : MonoBehaviour
 
         ChangeWeapon();
 
+        if (WeaponManager.Instance.weaponIsEquiped)
+        {
+            WeaponInput();
+        
+        }
+
+
     }
 
 
@@ -21,6 +28,7 @@ public class PlayerInput : MonoBehaviour
 
         GetComponent<PlayerManager>().actualMode.SetInput(inputs);
     }
+
 
     void ChangeWeapon()
     {
@@ -34,5 +42,30 @@ public class PlayerInput : MonoBehaviour
         }
 
     }
+
+
+    void WeaponInput()
+    {
+        if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(0))
+        {
+            PlayerManager.Instance.CallChangeAimState(true);
+
+        }
+        if (Input.GetMouseButtonUp(1) && !Input.GetMouseButton(0) || Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1))
+        {
+            PlayerManager.Instance.CallChangeAimState(false);
+
+        }
+
+
+
+        if (Input.GetMouseButton(0))
+        {
+            WeaponManager.Instance.WeaponShotInputs();
+        }
+    }
+
+
+
 
 }

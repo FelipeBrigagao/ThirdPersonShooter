@@ -45,13 +45,20 @@ public class WeaponManager : MonoBehaviour
     public bool weaponIsEquiped;
 
     [SerializeField]
+    WeaponStats equipedWeapon;
+
+    [SerializeField]
+    WeaponStats[] weapons;
+
+
+
+    [SerializeField]
     Transform equipedWeaponPivot;
 
     [SerializeField]
     Transform unequipedWeaponPivot;
 
-    [SerializeField]
-    WeaponStats equipedWeapon;
+
    
     [SerializeField]
     Rig handsIKRig;
@@ -61,9 +68,6 @@ public class WeaponManager : MonoBehaviour
 
     [SerializeField]
     Rig weaponAwayRigLayer;
-
-    [SerializeField]
-    WeaponStats[] weapons;
 
 
     private void Start()
@@ -150,5 +154,16 @@ public class WeaponManager : MonoBehaviour
 
 
     }
+
+
+
+    public void WeaponShotInputs()
+    {
+        equipedWeapon.Shoot();
+
+    }
+
+
+
 
 }

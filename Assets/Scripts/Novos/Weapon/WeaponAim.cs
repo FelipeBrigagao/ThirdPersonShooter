@@ -28,20 +28,7 @@ public class WeaponAim : MonoBehaviour
 
     private void Update()
     {
-        if (WeaponManager.Instance.weaponIsEquiped)
-        {
-            if (Input.GetMouseButtonDown(1))
-            {
-                PlayerManager.Instance.CallChangeAimState(true);
-
-            }
-            if (Input.GetMouseButtonUp(1))
-            {
-                PlayerManager.Instance.CallChangeAimState(false);
-
-            }
-
-        }
+        
     }
 
 
