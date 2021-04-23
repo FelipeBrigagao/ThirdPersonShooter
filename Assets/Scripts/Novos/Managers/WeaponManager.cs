@@ -80,6 +80,8 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    
+
     public void ChangeEquipedWeapon(int weaponSlot)
     {
 
@@ -110,8 +112,8 @@ public class WeaponManager : MonoBehaviour
         {
             weapon.transform.SetParent(equipedWeaponPivot);
 
-            weapon.transform.localPosition = weapon.weapon.posesInfo.pivotPosition;                                         //Deixar arma no pivot
-            weapon.transform.localRotation = Quaternion.Euler(weapon.weapon.posesInfo.pivotRotation);
+            weapon.transform.localPosition = weapon.weaponInfo.posesInfo.pivotPosition;                                         //Deixar arma no pivot
+            weapon.transform.localRotation = Quaternion.Euler(weapon.weaponInfo.posesInfo.pivotRotation);
 
             weaponIsEquiped = true;
 
@@ -143,8 +145,8 @@ public class WeaponManager : MonoBehaviour
 
             weapon.transform.SetParent(unequipedWeaponPivot);                   //Seta o pai da arma para o pivot da arma desequipada
 
-            weapon.transform.localPosition = weapon.weapon.posesInfo.pivotPosition;                                       //Deixar arma no pivot
-            weapon.transform.localRotation = Quaternion.Euler(weapon.weapon.posesInfo.pivotRotation);
+            weapon.transform.localPosition = weapon.weaponInfo.posesInfo.pivotPosition;                                       //Deixar arma no pivot
+            weapon.transform.localRotation = Quaternion.Euler(weapon.weaponInfo.posesInfo.pivotRotation);
 
             weaponAwayRigLayer.weight = 1f;
 
@@ -157,7 +159,7 @@ public class WeaponManager : MonoBehaviour
 
 
 
-    public void WeaponShotInputs()
+    public void WeaponShootInputs()
     {
         equipedWeapon.Shoot();
 

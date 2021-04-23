@@ -61,7 +61,7 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            WeaponManager.Instance.WeaponShotInputs();
+            WeaponManager.Instance.WeaponShootInputs();
         }
     }
 

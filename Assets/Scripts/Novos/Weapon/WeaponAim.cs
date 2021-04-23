@@ -7,7 +7,7 @@ public class WeaponAim : MonoBehaviour
 {
 
     [SerializeField]
-    Rig weaponRigLayer;
+    Rig weaponAimingRigLayer;
 
     [SerializeField]
     float aimingSpeed = 0.1f;
@@ -34,13 +34,13 @@ public class WeaponAim : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (aiming && weaponRigLayer.weight < 1)
+        if (aiming && weaponAimingRigLayer.weight < 1)
         {
-            weaponRigLayer.weight += Time.deltaTime / aimingSpeed;
+            weaponAimingRigLayer.weight += Time.deltaTime / aimingSpeed;
 
-        }else if (!aiming && weaponRigLayer.weight > 0)
+        }else if (!aiming && weaponAimingRigLayer.weight > 0)
         {
-            weaponRigLayer.weight -= Time.deltaTime / aimingSpeed;
+            weaponAimingRigLayer.weight -= Time.deltaTime / aimingSpeed;
 
         }
     }

@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: WaterGun
   m_EditorClassIdentifier: 
   name: WaterGun
+  impactEffect: {fileID: 0}
   damage: 5
+  fireRate: 7
+  range: 100
+  maxAmmo: 30
+  bulletSpeed: 1000
+  bulletDrop: 0
   type: 0
   posesInfo:
     pivotPosition: {x: 0, y: -0.1770022, z: 0.24899}
