@@ -19,8 +19,12 @@ MonoBehaviour:
   range: 100
   maxAmmo: 30
   bulletSpeed: 1000
-  bulletDrop: 0
+  bulletDrop: 300
   type: 0
+  muzzleFlash: {fileID: 2258176708668749816, guid: 8dd4bb12474077447a73dfa6b0ea3136,
+    type: 3}
+  bulletTracer: {fileID: 3467671783774960313, guid: 57829acad0820de4eb2b0543fd4e9943,
+    type: 3}
   posesInfo:
     pivotPosition: {x: 0, y: -0.1770022, z: 0.24899}
     pivotRotation: {x: 0, y: 360, z: 0}

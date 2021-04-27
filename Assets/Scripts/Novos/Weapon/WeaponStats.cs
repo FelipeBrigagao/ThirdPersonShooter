@@ -5,12 +5,7 @@ using UnityEngine;
 public class WeaponStats : MonoBehaviour
 {
 
-    [SerializeField]
     ParticleSystem muzzleFlash;
-
-    [SerializeField]
-    TrailRenderer bulletTracer;
-    
 
     [SerializeField]
     Transform firePoint;
@@ -18,28 +13,52 @@ public class WeaponStats : MonoBehaviour
     [SerializeField]
     Transform crossHairTarget;
 
-    
+
     [SerializeField]
-    public WeaponSO weaponInfo;
+    WeaponSO _weaponInfo;
+
+    public WeaponSO WeaponInfo
+    {
+        get 
+        {
+            if(_weaponInfo != null)
+            {
+                return _weaponInfo;
+            }
+
+            return null;
+        }
+    }
 
     float nextTimeToShoot = 0f;
     
+
+
+
+
+
+    private void Start()
+    {
+        muzzleFlash = Instantiate(WeaponInfo.muzzleFlash, this.transform);
+
+    }
+
 
     public void Shoot()
     {
 
         if(nextTimeToShoot <= Time.time)
         {
-            nextTimeToShoot = Time.time + 1f/weaponInfo.fireRate;
+            nextTimeToShoot = Time.time + 1f/WeaponInfo.fireRate;
 
             muzzleFlash.Play();
 
-            Vector3 bulletVelocity = (crossHairTarget.position - firePoint.position).normalized * weaponInfo.bulletSpeed;
+            Vector3 bulletVelocity = (crossHairTarget.position - firePoint.position).normalized * WeaponInfo.bulletSpeed;
 
-            TrailRenderer tracer = Instantiate(bulletTracer, firePoint.position, Quaternion.identity);
+            TrailRenderer tracer = Instantiate(WeaponInfo.bulletTracer, firePoint.position, Quaternion.identity);
             tracer.AddPosition(firePoint.position);
 
-            Bullet bullet = new Bullet(bulletVelocity, firePoint.position, 0f, tracer, weaponInfo.bulletDrop, (weaponInfo.range/weaponInfo.bulletSpeed));
+            Bullet bullet = new Bullet(bulletVelocity, firePoint.position, 0f, tracer, WeaponInfo.bulletDrop, (WeaponInfo.range/WeaponInfo.bulletSpeed));
 
             BulletsManager.Instance.AddBullet(bullet);
             

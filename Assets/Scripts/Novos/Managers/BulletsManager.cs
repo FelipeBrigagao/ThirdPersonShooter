@@ -46,6 +46,9 @@ public class BulletsManager : MonoBehaviour
     Ray ray;
     RaycastHit hitInfo;
 
+    Vector3 p0;
+    Vector3 p1;
+
 
     private void Update()                                                                       //Realiza a movimentação e a remoção das balas armazenadas
     {
@@ -65,18 +68,18 @@ public class BulletsManager : MonoBehaviour
     }
 
     Vector3 GetBulletPosition(Bullet bullet)                        // Pega a proxima posição da bala com relação ao tempo que a mesma existe, usa a posição inicial(dada pelo ponto de tiro da arma), velocidade inicial (dada pela direção e velocidade da bala)
-    {                                                                         //bullet time(tempo que a bala existe)                                                          
-        Vector3 gravity = bullet.bulletDrop * Vector3.down;
-        return bullet.initialPosition + bullet.initialVelocity * bullet.time + 0.5f * gravity * bullet.time * bullet.time;             //Formula da trajetória de um projétil Po + Vo*t + 0.5*g*t²
+    {                                                                         //bullet time(tempo que a bala existe)   
+
+        return bullet.initialPosition + bullet.initialVelocity * bullet.time + 0.5f * bullet.bulletGravity * bullet.time * bullet.time;             //Formula da trajetória de um projétil Po + Vo*t + 0.5*g*t²
     }
 
     void SimulateBullets(float deltatime)                      //simula a movimentação da bala, pegando a posição com o tempo que ela está e após mais uma aferição de tempo, com isso se consegue um pequeno deslocamento
     {                                                                    // que tera um raycast associado a esse, para verificar se no próximo movimento teria um impacto
         foreach (Bullet bullet in bullets)
         {
-            Vector3 p0 = GetBulletPosition(bullet);
+            p0 = GetBulletPosition(bullet);
             bullet.time += deltatime;
-            Vector3 p1 = GetBulletPosition(bullet);
+            p1 = GetBulletPosition(bullet);
 
             RaycastBulletSegment(p0, p1, bullet);
 

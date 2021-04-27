@@ -6,7 +6,7 @@ public class Bullet
 {
     public Vector3 initialVelocity;
     public Vector3 initialPosition;
-    public float bulletDrop;
+    public Vector3 bulletGravity;
     public float time;
     public float maxLifeTime;
     public TrailRenderer bulletTracer;
@@ -17,7 +17,7 @@ public class Bullet
         this.initialVelocity = velocity;
         this.time = time;
         this.bulletTracer = bulletTracer;
-        this.bulletDrop = drop;
+        this.bulletGravity = drop * Vector3.down;
         this.maxLifeTime = maxTime;
     }
         

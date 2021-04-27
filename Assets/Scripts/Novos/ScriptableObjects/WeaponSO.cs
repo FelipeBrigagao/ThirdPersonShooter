@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Object/Weapon")]
 public class WeaponSO : ObjectSO
 {
@@ -20,7 +19,12 @@ public class WeaponSO : ObjectSO
 
     public WeaponType type;
 
+    public ParticleSystem muzzleFlash;
+
+    public TrailRenderer bulletTracer;
+
     public WeaponPosesInfo posesInfo;
+
 
 }
 

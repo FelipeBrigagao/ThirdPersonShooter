@@ -44,10 +44,8 @@ public class WeaponManager : MonoBehaviour
 
     public bool weaponIsEquiped;
 
-    [SerializeField]
     WeaponStats equipedWeapon;
 
-    [SerializeField]
     WeaponStats[] weapons;
 
 
@@ -74,10 +72,18 @@ public class WeaponManager : MonoBehaviour
     {
         weapons = new WeaponStats[2];
 
-        if (equipedWeapon != null)
+        WeaponStats weaponEquiped = equipedWeaponPivot.GetComponentInChildren<WeaponStats>();
+
+        WeaponStats[] weaponsUnequiped = unequipedWeaponPivot.GetComponentsInChildren<WeaponStats>();
+
+        Equip(weaponEquiped);
+
+        foreach(WeaponStats w in weaponsUnequiped)
         {
-            weaponIsEquiped = true;
+            Unequip(w);
         }
+
+
     }
 
     
@@ -85,19 +91,16 @@ public class WeaponManager : MonoBehaviour
     public void ChangeEquipedWeapon(int weaponSlot)
     {
 
+        WeaponStats weaponAux;
+
+        weaponAux = equipedWeapon;
+
         Equip(weapons[weaponSlot]);
 
-        Unequip(equipedWeapon);
-
-        WeaponStats aux;
-
-        aux = weapons[weaponSlot];
-
-        weapons[weaponSlot] = equipedWeapon;
-
-        equipedWeapon = aux;
+        Unequip(weaponAux);
 
     }
+
 
     public void AddNewWeapon(WeaponStats weapon)
     {
@@ -108,12 +111,13 @@ public class WeaponManager : MonoBehaviour
 
     void Equip(WeaponStats weapon)
     {
+
         if(weapon != null)
         {
             weapon.transform.SetParent(equipedWeaponPivot);
 
-            weapon.transform.localPosition = weapon.weaponInfo.posesInfo.pivotPosition;                                         //Deixar arma no pivot
-            weapon.transform.localRotation = Quaternion.Euler(weapon.weaponInfo.posesInfo.pivotRotation);
+            weapon.transform.localPosition = weapon.WeaponInfo.posesInfo.pivotPosition;                                         //Deixar arma no pivot
+            weapon.transform.localRotation = Quaternion.Euler(weapon.WeaponInfo.posesInfo.pivotRotation);
 
             weaponIsEquiped = true;
 
@@ -122,6 +126,18 @@ public class WeaponManager : MonoBehaviour
             weaponPoseRigLayer.weight = 1f;
 
             weaponAwayRigLayer.weight = 0f;
+
+
+
+            if (weapon.WeaponInfo.type == WeaponType.Primary)
+            {
+                weapons[0] = null;
+            }
+            else
+            {
+                weapons[1] = null;
+            }
+
 
         }
         else
@@ -134,6 +150,7 @@ public class WeaponManager : MonoBehaviour
 
         }
 
+        equipedWeapon = weapon;
 
     }
 
@@ -145,10 +162,24 @@ public class WeaponManager : MonoBehaviour
 
             weapon.transform.SetParent(unequipedWeaponPivot);                   //Seta o pai da arma para o pivot da arma desequipada
 
-            weapon.transform.localPosition = weapon.weaponInfo.posesInfo.pivotPosition;                                       //Deixar arma no pivot
-            weapon.transform.localRotation = Quaternion.Euler(weapon.weaponInfo.posesInfo.pivotRotation);
+            weapon.transform.localPosition = weapon.WeaponInfo.posesInfo.pivotPosition;                                       //Deixar arma no pivot
+            weapon.transform.localRotation = Quaternion.Euler(weapon.WeaponInfo.posesInfo.pivotRotation);
 
             weaponAwayRigLayer.weight = 1f;
+
+
+
+            if(weapon.WeaponInfo.type == WeaponType.Primary)
+            {
+                weapons[0] = weapon;
+            }
+            else
+            {
+                weapons[1] = weapon;
+            }
+
+
+
 
         }
        
