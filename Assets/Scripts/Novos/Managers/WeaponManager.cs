@@ -42,6 +42,10 @@ public class WeaponManager : MonoBehaviour
 
     #endregion
 
+    [SerializeField]
+    Transform crossHairTarget;
+
+
     public bool weaponIsEquiped;
 
     WeaponStats equipedWeapon;
@@ -90,30 +94,30 @@ public class WeaponManager : MonoBehaviour
 
     public void ChangeEquipedWeapon(int weaponSlot)
     {
-
-        WeaponStats weaponAux;
-
-        weaponAux = equipedWeapon;
-
         Equip(weapons[weaponSlot]);
-
-        Unequip(weaponAux);
 
     }
 
 
     public void AddNewWeapon(WeaponStats weapon)
     {
-        
 
+        Equip(weapon);
 
     }
 
     void Equip(WeaponStats weapon)
     {
 
+        if (weaponIsEquiped)
+        {
+            Unequip(equipedWeapon);
+        }
+
         if(weapon != null)
         {
+            weapon.crossHairTarget = this.crossHairTarget;
+
             weapon.transform.SetParent(equipedWeaponPivot);
 
             weapon.transform.localPosition = weapon.WeaponInfo.posesInfo.pivotPosition;                                         //Deixar arma no pivot
@@ -183,9 +187,6 @@ public class WeaponManager : MonoBehaviour
 
         }
        
-
-
-
     }
 
 

@@ -10,8 +10,8 @@ public class WeaponStats : MonoBehaviour
     [SerializeField]
     Transform firePoint;
 
-    [SerializeField]
-    Transform crossHairTarget;
+
+    public Transform crossHairTarget;
 
 
     [SerializeField]
@@ -32,8 +32,6 @@ public class WeaponStats : MonoBehaviour
 
     float nextTimeToShoot = 0f;
     
-
-
 
 
 

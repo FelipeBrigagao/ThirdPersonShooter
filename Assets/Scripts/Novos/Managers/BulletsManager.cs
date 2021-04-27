@@ -18,7 +18,7 @@ public class BulletsManager : MonoBehaviour
 
                     GameObject go = new GameObject("BulletManager");
 
-                    go.AddComponent<WeaponManager>();
+                    go.AddComponent<BulletsManager>();
 
                 }
 
