@@ -19,6 +19,10 @@ public class WeaponSO : ObjectSO
 
     public WeaponType type;
 
+    public AnimationClip weaponAnimationPose;
+
+    public AnimationClip weaponAnimationAiming;
+
     public ParticleSystem muzzleFlash;
 
     public TrailRenderer bulletTracer;

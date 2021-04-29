@@ -76,11 +76,7 @@ public class PlayerManager : MonoBehaviour
         actualMode = cmu;
     }
      
-    private void Update()
-    {
 
-
-    }
 
     void ChangeStates(bool weaponAiming)
     {

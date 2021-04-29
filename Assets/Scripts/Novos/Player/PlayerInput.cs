@@ -6,6 +6,7 @@ public class PlayerInput : MonoBehaviour
 {
     Vector2 inputs;
 
+
     private void Update()
     {
         MoveInput();

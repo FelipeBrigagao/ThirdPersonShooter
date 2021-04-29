@@ -37,7 +37,7 @@ public class WeaponStats : MonoBehaviour
 
     private void Start()
     {
-        muzzleFlash = Instantiate(WeaponInfo.muzzleFlash, this.transform);
+        muzzleFlash = Instantiate(WeaponInfo.muzzleFlash, firePoint);
 
     }
 

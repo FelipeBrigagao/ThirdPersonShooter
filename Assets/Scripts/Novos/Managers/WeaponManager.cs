@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using UnityEditor.Animations;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -72,6 +73,20 @@ public class WeaponManager : MonoBehaviour
     Rig weaponAwayRigLayer;
 
 
+
+
+
+    [SerializeField]
+    Transform rightHandPosition;
+
+    [SerializeField]
+    Transform leftHandPosition;
+
+    [SerializeField]
+    GameObject player;
+
+
+
     private void Start()
     {
         weapons = new WeaponStats[2];
@@ -101,7 +116,6 @@ public class WeaponManager : MonoBehaviour
 
     public void AddNewWeapon(WeaponStats weapon)
     {
-
         Equip(weapon);
 
     }
@@ -127,11 +141,13 @@ public class WeaponManager : MonoBehaviour
 
             handsIKRig.weight = 1f;
 
-            weaponPoseRigLayer.weight = 1f;
+           // weaponPoseRigLayer.weight = 1f;
 
             weaponAwayRigLayer.weight = 0f;
 
 
+            StartCoroutine(CharacterAnimation.Instance.SetWeaponAnimations(weapon.WeaponInfo.weaponAnimationPose, weapon.WeaponInfo.weaponAnimationAiming));        //Troca as animações de pose do animator para as 
+                                                                                                                                                                                                                                        //animações da arma atual
 
             if (weapon.WeaponInfo.type == WeaponType.Primary)
             {
@@ -150,9 +166,11 @@ public class WeaponManager : MonoBehaviour
 
             handsIKRig.weight = 0f;
 
-            weaponPoseRigLayer.weight = 0f;
+            //weaponPoseRigLayer.weight = 0f;
 
         }
+
+        CharacterAnimation.Instance.ChangeWeaponLayerWeight(weaponIsEquiped);               //Muda o weight da Layer de animação de pose da arma com relação a se tem uma arma equipada ou não
 
         equipedWeapon = weapon;
 
@@ -196,6 +214,44 @@ public class WeaponManager : MonoBehaviour
         equipedWeapon.Shoot();
 
     }
+
+
+
+
+
+
+    [ContextMenu("Save equiped weapon pose")]
+    void SaveEquipedWeaponPose()
+    {
+        GameObjectRecorder recorder = new GameObjectRecorder(player);
+        recorder.BindComponentsOfType<Transform>(equipedWeaponPivot.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(rightHandPosition.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(leftHandPosition.gameObject, false);
+        recorder.TakeSnapshot(0.0f);
+        recorder.SaveToClip(equipedWeapon.WeaponInfo.weaponAnimationPose);
+        UnityEditor.AssetDatabase.SaveAssets();
+
+    }
+
+
+    [ContextMenu("Save equiped weapon aiming")]
+    void SaveEquipedWeaponAiming()
+    {
+        GameObjectRecorder recorder = new GameObjectRecorder(player);
+        recorder.BindComponentsOfType<Transform>(equipedWeaponPivot.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(rightHandPosition.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(leftHandPosition.gameObject, false);
+        recorder.TakeSnapshot(0.0f);
+        recorder.SaveToClip(equipedWeapon.WeaponInfo.weaponAnimationAiming);
+        UnityEditor.AssetDatabase.SaveAssets();
+
+    }
+
+
+
+
+
+
 
 
 

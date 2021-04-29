@@ -4,7 +4,45 @@ using UnityEngine;
 
 public class CharacterAnimation : MonoBehaviour
 {
+    #region Singleton
+
+    private static CharacterAnimation _instance;
+
+    public static CharacterAnimation Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("Character Animation não encontrado, criando um.");
+
+                GameObject go = new GameObject("CharacterAnimation");
+
+                go.AddComponent<CharacterAnimation>();
+
+            }
+            return _instance;
+        }
+    }
+
+
+    private void Awake()
+    {
+        if (_instance != null)
+        {
+            Debug.LogWarning("Character Animation já existente, uma segunda instância não será criada.");
+            return;
+        }
+
+        Debug.Log("Character Animation criado.");
+        _instance = this;
+    }
+
+    #endregion
+
+
     Animator anim;
+    AnimatorOverrideController overrides;
 
     [SerializeField]
     float animationSmoother;
@@ -14,6 +52,8 @@ public class CharacterAnimation : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+        overrides = anim.runtimeAnimatorController as AnimatorOverrideController;
+
         PlayerManager.OnAimWeapon += ChangeArmedState;
 
 
@@ -47,10 +87,58 @@ public class CharacterAnimation : MonoBehaviour
     }
 
 
-    public void ChangeArmedState(bool armed)
+    public void ChangeArmedState(bool aiming)
     {
-        anim.SetBool("Armed", armed);
+        anim.SetBool("Armed", aiming);
     }
+
+
+    //Colocar a layer de arma ou sem
+    public void ChangeWeaponLayerWeight(bool weaponEquiped)
+    {
+        if (weaponEquiped)
+        {
+            anim.SetLayerWeight(1, 1f);
+        }
+        else
+        {
+            anim.SetLayerWeight(1, 0f);
+        }
+
+    }
+
+    //Setar as animações para arma mirando e pose
+    public IEnumerator SetWeaponAnimations(AnimationClip pose, AnimationClip aiming)
+    {
+
+        yield return new WaitForSeconds(0.001f);
+
+        overrides["GunAnimationAimingEmpty"] = aiming;
+
+        overrides["GunAnimationPoseEmpty"] = pose;
+
+
+    }
+
+    
+    //Colocar a animação de arma mirando ou pose para rodar
+
+    public void ChangeWeaponAnimationsWeight(float weight)
+    {
+        anim.SetFloat("Aiming", weight);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void OnDisable()
     {

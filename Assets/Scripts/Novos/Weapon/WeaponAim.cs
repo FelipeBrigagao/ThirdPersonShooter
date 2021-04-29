@@ -37,10 +37,12 @@ public class WeaponAim : MonoBehaviour
         if (aiming && weaponAimingRigLayer.weight < 1)
         {
             weaponAimingRigLayer.weight += Time.deltaTime / aimingSpeed;
+            CharacterAnimation.Instance.ChangeWeaponAnimationsWeight(weaponAimingRigLayer.weight);                                      //Altera entre as animações de pose com a arma mirando ou não
 
         }else if (!aiming && weaponAimingRigLayer.weight > 0)
         {
             weaponAimingRigLayer.weight -= Time.deltaTime / aimingSpeed;
+            CharacterAnimation.Instance.ChangeWeaponAnimationsWeight(weaponAimingRigLayer.weight);
 
         }
     }

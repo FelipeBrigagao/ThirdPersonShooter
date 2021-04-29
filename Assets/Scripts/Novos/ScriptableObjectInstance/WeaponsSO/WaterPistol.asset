@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6c63c260b1cea747941f494eacefdb0, type: 3}
-  m_Name: WaterGun
+  m_Name: WaterPistol
   m_EditorClassIdentifier: 
-  name: WaterGun
+  name: WaterPistol
   impactEffect: {fileID: 0}
   damage: 5
-  fireRate: 7
-  range: 100
-  maxAmmo: 30
-  bulletSpeed: 1000
-  bulletDrop: 300
-  type: 0
-  weaponAnimationPose: {fileID: 7400000, guid: dfb9d1db14360fb4d96d935ba2610653, type: 2}
-  weaponAnimationAiming: {fileID: 7400000, guid: 65fcdd797c1b0194dbccd4b523b5f2c3,
+  fireRate: 2
+  range: 50
+  maxAmmo: 12
+  bulletSpeed: 500
+  bulletDrop: 100
+  type: 1
+  weaponAnimationPose: {fileID: 7400000, guid: 60988af7da801eb40bae8bc840267163, type: 2}
+  weaponAnimationAiming: {fileID: 7400000, guid: 8274b7d8091aa9f48960d5763f0c452a,
     type: 2}
   muzzleFlash: {fileID: 2258176708668749816, guid: 8dd4bb12474077447a73dfa6b0ea3136,
     type: 3}
   bulletTracer: {fileID: 3467671783774960313, guid: 57829acad0820de4eb2b0543fd4e9943,
     type: 3}
   posesInfo:
-    pivotPosition: {x: 0, y: -0.1770022, z: 0.24899}
+    pivotPosition: {x: 0, y: 0, z: 0}
     pivotRotation: {x: 0, y: 360, z: 0}
