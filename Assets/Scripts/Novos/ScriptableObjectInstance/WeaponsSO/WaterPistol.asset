@@ -21,9 +21,10 @@ MonoBehaviour:
   bulletSpeed: 500
   bulletDrop: 100
   type: 1
-  weaponAnimationPose: {fileID: 7400000, guid: 60988af7da801eb40bae8bc840267163, type: 2}
+  weaponAnimationPose: {fileID: 7400000, guid: 66452702ea43916478fad06bae31bc76, type: 2}
   weaponAnimationAiming: {fileID: 7400000, guid: 8274b7d8091aa9f48960d5763f0c452a,
     type: 2}
+  weaponAnimationStored: {fileID: 0}
   muzzleFlash: {fileID: 2258176708668749816, guid: 8dd4bb12474077447a73dfa6b0ea3136,
     type: 3}
   bulletTracer: {fileID: 3467671783774960313, guid: 57829acad0820de4eb2b0543fd4e9943,

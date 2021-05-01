@@ -22,6 +22,8 @@ public class WeaponSO : ObjectSO
     public AnimationClip weaponAnimationPose;
 
     public AnimationClip weaponAnimationAiming;
+    
+    public AnimationClip weaponAnimationStored;
 
     public ParticleSystem muzzleFlash;
 

@@ -108,7 +108,7 @@ public class CharacterAnimation : MonoBehaviour
     }
 
     //Setar as animações para arma mirando e pose
-    public IEnumerator SetWeaponAnimations(AnimationClip pose, AnimationClip aiming)
+    public IEnumerator SetEquipedWeaponAnimations(AnimationClip pose, AnimationClip aiming)
     {
 
         yield return new WaitForSeconds(0.001f);
@@ -123,7 +123,7 @@ public class CharacterAnimation : MonoBehaviour
     
     //Colocar a animação de arma mirando ou pose para rodar
 
-    public void ChangeWeaponAnimationsWeight(float weight)
+    public void ChangeWeaponAimingAnimationsWeight(float weight)
     {
         anim.SetFloat("Aiming", weight);
     }
