@@ -64,6 +64,32 @@ public class WeaponManager : MonoBehaviour
     Transform secundaryWeaponUnequipedPivot;
 
 
+    [Header("Animation poses instances")]
+    
+    [SerializeField]
+    Rig handsIKRig;
+
+    [SerializeField]
+    Rig weaponPoseRigLayer;
+
+    [SerializeField]
+    Rig weaponAwayRigLayer;
+
+    [SerializeField]
+    Transform rightHandPosition;
+
+    [SerializeField]
+    Transform rightHandHint;
+
+    [SerializeField]
+    Transform leftHandPosition;
+
+    [SerializeField]
+    Transform leftHandHint;
+
+    [SerializeField]
+    GameObject player;
+
 
 
     private void Start()
@@ -105,9 +131,9 @@ public class WeaponManager : MonoBehaviour
         if (weaponIsEquiped)
         {
 
-            Destroy(equipedWeapon.gameObject);
+           // Destroy(equipedWeapon.gameObject);
 
-            //Unequip(equipedWeapon);
+            Unequip(equipedWeapon);
         }
 
         if(weapon != null)
@@ -120,6 +146,14 @@ public class WeaponManager : MonoBehaviour
             weapon.transform.localRotation = Quaternion.Euler(weapon.WeaponInfo.posesInfo.pivotRotation);
 
             weaponIsEquiped = true;
+
+            handsIKRig.weight = 1f;
+
+            //weaponAwayRigLayer.weight = 0f;            //Vai ser sempre 1
+
+
+            StartCoroutine(CharacterAnimation.Instance.SetEquipedWeaponAnimations(weapon.WeaponInfo.weaponAnimationPose, weapon.WeaponInfo.weaponAnimationAiming));        //Troca as animações de pose do animator para as 
+                                                                                                                                                                                                                                        //animações da arma atual
 
             if (weapon.WeaponInfo.type == WeaponType.Primary)
             {
@@ -136,9 +170,11 @@ public class WeaponManager : MonoBehaviour
         {
             weaponIsEquiped = false;
 
+            handsIKRig.weight = 0f;
+
         }
 
-        
+        CharacterAnimation.Instance.ChangeWeaponLayerWeight(weaponIsEquiped);               //Muda o weight da Layer de animação de pose da arma com relação a se tem uma arma equipada ou não
 
         equipedWeapon = weapon;
 
@@ -150,7 +186,10 @@ public class WeaponManager : MonoBehaviour
         if(weapon != null)
         {
 
+            weapon.transform.SetParent(primaryWeaponUnequipedPivot);                   //Seta o pai da arma para o pivot da arma desequipada
 
+            weapon.transform.localPosition = weapon.WeaponInfo.posesInfo.pivotPosition;                                       //Deixar arma no pivot
+            weapon.transform.localRotation = Quaternion.Euler(weapon.WeaponInfo.posesInfo.pivotRotation);
 
             //weaponAwayRigLayer.weight = 1f;           //Vai ser sempre 1
 
@@ -158,21 +197,14 @@ public class WeaponManager : MonoBehaviour
 
             if(weapon.WeaponInfo.type == WeaponType.Primary)
             {
-                weapon.transform.SetParent(primaryWeaponUnequipedPivot);                   //Seta o pai da arma para o pivot da arma desequipada
-              
                 weapons[0] = weapon;
-            
             }
             else
             {
-                weapon.transform.SetParent(secundaryWeaponUnequipedPivot);
-
                 weapons[1] = weapon;
             }
 
 
-            weapon.transform.localPosition = weapon.WeaponInfo.posesInfo.pivotPosition;                                       //Deixar arma no pivot
-            weapon.transform.localRotation = Quaternion.Euler(weapon.WeaponInfo.posesInfo.pivotRotation);
 
 
         }
@@ -186,5 +218,50 @@ public class WeaponManager : MonoBehaviour
         equipedWeapon.Shoot();
 
     }
+
+
+
+
+
+
+    [ContextMenu("Save equiped weapon pose")]
+    void SaveEquipedWeaponPose()
+    {
+        GameObjectRecorder recorder = new GameObjectRecorder(player);
+        recorder.BindComponentsOfType<Transform>(equipedWeaponPivot.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(rightHandPosition.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(leftHandPosition.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(rightHandHint.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(leftHandHint.gameObject, false);
+        recorder.TakeSnapshot(0.0f);
+        recorder.SaveToClip(equipedWeapon.WeaponInfo.weaponAnimationPose);
+        UnityEditor.AssetDatabase.SaveAssets();
+
+    }
+
+
+    [ContextMenu("Save equiped weapon aiming")]
+    void SaveEquipedWeaponAiming()
+    {
+        GameObjectRecorder recorder = new GameObjectRecorder(player);
+        recorder.BindComponentsOfType<Transform>(equipedWeaponPivot.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(rightHandPosition.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(leftHandPosition.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(rightHandHint.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(leftHandHint.gameObject, false);
+        recorder.TakeSnapshot(0.0f);
+        recorder.SaveToClip(equipedWeapon.WeaponInfo.weaponAnimationAiming);
+        UnityEditor.AssetDatabase.SaveAssets();
+
+    }
+
+
+
+
+
+
+
+
+
 
 }
