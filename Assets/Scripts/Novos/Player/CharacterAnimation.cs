@@ -93,53 +93,6 @@ public class CharacterAnimation : MonoBehaviour
     }
 
 
-    //Colocar a layer de arma ou sem
-    public void ChangeWeaponLayerWeight(bool weaponEquiped)
-    {
-        if (weaponEquiped)
-        {
-            anim.SetLayerWeight(1, 1f);
-        }
-        else
-        {
-            anim.SetLayerWeight(1, 0f);
-        }
-
-    }
-
-    //Setar as animações para arma mirando e pose
-    public IEnumerator SetEquipedWeaponAnimations(AnimationClip pose, AnimationClip aiming)
-    {
-
-        yield return new WaitForSeconds(0.001f);
-
-        overrides["GunAnimationAimingEmpty"] = aiming;
-
-        overrides["GunAnimationPoseEmpty"] = pose;
-
-
-    }
-
-    
-    //Colocar a animação de arma mirando ou pose para rodar
-
-    public void ChangeWeaponAimingAnimationsWeight(float weight)
-    {
-        anim.SetFloat("Aiming", weight);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void OnDisable()
     {
 
