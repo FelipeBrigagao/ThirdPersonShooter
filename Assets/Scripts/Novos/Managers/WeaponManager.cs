@@ -150,7 +150,7 @@ public class WeaponManager : MonoBehaviour
             StartCoroutine(CharacterAnimation.Instance.SetEquipedWeaponAnimations(weapon.WeaponInfo.weaponAnimationHolsterAim, weapon.WeaponInfo.weaponAnimationPose, weapon.WeaponInfo.weaponAnimationAim, weapon.WeaponInfo.weaponAnimationPoseHolster));        //Troca as animações de pose do animator para as 
 
             //tocar a animação de equipar a arma
-            StartCoroutine(CharacterAnimation.Instance.EquipWeapon());
+            CharacterAnimation.Instance.EquipWeapon();
 
             if(weapon.WeaponInfo.type == WeaponType.Primary)
             {
@@ -186,11 +186,13 @@ public class WeaponManager : MonoBehaviour
     void Unequip(WeaponStats weapon)
     {
 
-        if(weapon != null)
+        PlayerManager.Instance.CallChangeAimState(false);
+
+        if (weapon != null)
         {
 
             // toca a animação de desarmar, o equipedPivot vai ficar no lugar onde a arma deve ficar guardada, colocar o pivot de unarmed com os valores do equiped
-            StartCoroutine(CharacterAnimation.Instance.UnequipWeapon());
+            CharacterAnimation.Instance.UnequipWeapon();
 
 
             if (weapon.WeaponInfo.type == WeaponType.Primary)
