@@ -48,8 +48,6 @@ public class WeaponManager : MonoBehaviour
     [SerializeField]
     Transform crossHairTarget;
 
-    public bool weaponIsEquiped;
-
     WeaponStats equipedWeapon;
 
     WeaponStats[] weapons;
@@ -58,10 +56,12 @@ public class WeaponManager : MonoBehaviour
     Transform equipedWeaponPivot;
 
     [SerializeField]
-    Transform primaryWeaponUnequipedPivot;
+    Transform primaryWeaponPivot;
     
     [SerializeField]
-    Transform secundaryWeaponUnequipedPivot;
+    Transform secundaryWeaponPivot;
+
+    public bool weaponIsEquiped;
 
 
     [Header("Animation poses instances")]
@@ -71,9 +71,6 @@ public class WeaponManager : MonoBehaviour
 
     [SerializeField]
     Rig weaponPoseRigLayer;
-
-    [SerializeField]
-    Rig weaponAwayRigLayer;
 
     [SerializeField]
     Transform rightHandPosition;
@@ -98,7 +95,7 @@ public class WeaponManager : MonoBehaviour
 
         WeaponStats weaponEquiped = equipedWeaponPivot.GetComponentInChildren<WeaponStats>();
 
-        WeaponStats[] weaponsUnequiped = primaryWeaponUnequipedPivot.GetComponentsInChildren<WeaponStats>();
+        WeaponStats[] weaponsUnequiped = primaryWeaponPivot.GetComponentsInChildren<WeaponStats>();
 
         Equip(weaponEquiped);
 
@@ -123,46 +120,53 @@ public class WeaponManager : MonoBehaviour
     {
         Equip(weapon);
 
+        weapons[(int)weapon.WeaponInfo.type] = equipedWeapon;
+
     }
+
 
     void Equip(WeaponStats weapon)
     {
+        //Se a arma a equipar for igual a equipada não se equipa nada, mas se desequipa a atual
+        if(weapon == equipedWeapon)
+        {
+            weapon = null;
+        }
+
 
         if (weaponIsEquiped)
         {
+           //Destroy(equipedWeapon.gameObject);
 
-           // Destroy(equipedWeapon.gameObject);
-
-            Unequip(equipedWeapon);
+           Unequip(equipedWeapon);
         }
+
+
 
         if(weapon != null)
         {
             weapon.crossHairTarget = this.crossHairTarget;
+           
+            StartCoroutine(CharacterAnimation.Instance.SetEquipedWeaponAnimations(weapon.WeaponInfo.weaponAnimationHolsterAim, weapon.WeaponInfo.weaponAnimationPose, weapon.WeaponInfo.weaponAnimationAim, weapon.WeaponInfo.weaponAnimationPoseHolster));        //Troca as animações de pose do animator para as 
 
-            weapon.transform.SetParent(equipedWeaponPivot);
+            //tocar a animação de equipar a arma
+            StartCoroutine(CharacterAnimation.Instance.EquipWeapon());
+
+            if(weapon.WeaponInfo.type == WeaponType.Primary)
+            {
+                weapon.transform.SetParent(primaryWeaponPivot);
+
+            }
+            else
+            {
+                weapon.transform.SetParent(secundaryWeaponPivot);
+
+            }
 
             weapon.transform.localPosition = weapon.WeaponInfo.posesInfo.pivotPosition;                                         //Deixar arma no pivot
             weapon.transform.localRotation = Quaternion.Euler(weapon.WeaponInfo.posesInfo.pivotRotation);
 
             weaponIsEquiped = true;
-
-            handsIKRig.weight = 1f;
-
-            //weaponAwayRigLayer.weight = 0f;            //Vai ser sempre 1
-
-
-            StartCoroutine(CharacterAnimation.Instance.SetEquipedWeaponAnimations(weapon.WeaponInfo.weaponAnimationPose, weapon.WeaponInfo.weaponAnimationAiming));        //Troca as animações de pose do animator para as 
-                                                                                                                                                                                                                                        //animações da arma atual
-
-            if (weapon.WeaponInfo.type == WeaponType.Primary)
-            {
-                weapons[0] = null;
-            }
-            else
-            {
-                weapons[1] = null;
-            }
 
 
         }
@@ -170,11 +174,10 @@ public class WeaponManager : MonoBehaviour
         {
             weaponIsEquiped = false;
 
-            handsIKRig.weight = 0f;
+            // colocar animação de unarmed?
 
         }
 
-        CharacterAnimation.Instance.ChangeWeaponLayerWeight(weaponIsEquiped);               //Muda o weight da Layer de animação de pose da arma com relação a se tem uma arma equipada ou não
 
         equipedWeapon = weapon;
 
@@ -186,22 +189,21 @@ public class WeaponManager : MonoBehaviour
         if(weapon != null)
         {
 
-            weapon.transform.SetParent(primaryWeaponUnequipedPivot);                   //Seta o pai da arma para o pivot da arma desequipada
-
-            weapon.transform.localPosition = weapon.WeaponInfo.posesInfo.pivotPosition;                                       //Deixar arma no pivot
-            weapon.transform.localRotation = Quaternion.Euler(weapon.WeaponInfo.posesInfo.pivotRotation);
-
-            //weaponAwayRigLayer.weight = 1f;           //Vai ser sempre 1
+            // toca a animação de desarmar, o equipedPivot vai ficar no lugar onde a arma deve ficar guardada, colocar o pivot de unarmed com os valores do equiped
+            StartCoroutine(CharacterAnimation.Instance.UnequipWeapon());
 
 
-
-            if(weapon.WeaponInfo.type == WeaponType.Primary)
+            if (weapon.WeaponInfo.type == WeaponType.Primary)
             {
                 weapons[0] = weapon;
+
+               
             }
             else
             {
                 weapons[1] = weapon;
+
+                
             }
 
 
@@ -222,7 +224,7 @@ public class WeaponManager : MonoBehaviour
 
 
 
-
+/*
 
     [ContextMenu("Save equiped weapon pose")]
     void SaveEquipedWeaponPose()
@@ -256,7 +258,7 @@ public class WeaponManager : MonoBehaviour
     }
 
 
-
+    */
 
 
 

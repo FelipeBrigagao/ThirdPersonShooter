@@ -21,9 +21,12 @@ MonoBehaviour:
   bulletSpeed: 1000
   bulletDrop: 300
   type: 0
-  weaponAnimationPose: {fileID: 7400000, guid: dfb9d1db14360fb4d96d935ba2610653, type: 2}
-  weaponAnimationAiming: {fileID: 7400000, guid: 65fcdd797c1b0194dbccd4b523b5f2c3,
+  weaponAnimationHolsterAim: {fileID: 7400000, guid: dfb9d1db14360fb4d96d935ba2610653,
     type: 2}
+  weaponAnimationPoseHolster: {fileID: 7400000, guid: 30e712f34cc752c42a9ab549c46ea074,
+    type: 2}
+  weaponAnimationAim: {fileID: 7400000, guid: 65fcdd797c1b0194dbccd4b523b5f2c3, type: 2}
+  weaponAnimationPose: {fileID: 7400000, guid: b1bba3659d8405140a8072398b7d0cd8, type: 2}
   muzzleFlash: {fileID: 2258176708668749816, guid: 8dd4bb12474077447a73dfa6b0ea3136,
     type: 3}
   bulletTracer: {fileID: 3467671783774960313, guid: 57829acad0820de4eb2b0543fd4e9943,

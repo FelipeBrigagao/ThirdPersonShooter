@@ -40,8 +40,12 @@ public class CharacterAnimation : MonoBehaviour
 
     #endregion
 
+    [SerializeField]
+    Animator animMovement;
 
-    Animator anim;
+    [SerializeField]
+    Animator animWeapon;
+
     AnimatorOverrideController overrides;
 
     [SerializeField]
@@ -51,8 +55,8 @@ public class CharacterAnimation : MonoBehaviour
 
     private void Start()
     {
-        anim = GetComponent<Animator>();
-        overrides = anim.runtimeAnimatorController as AnimatorOverrideController;
+
+        overrides = animWeapon.runtimeAnimatorController as AnimatorOverrideController;
 
         PlayerManager.OnAimWeapon += ChangeArmedState;
 
@@ -61,19 +65,19 @@ public class CharacterAnimation : MonoBehaviour
 
     public void PlayMoveAnimation(float speed)
     {
-        anim.SetFloat("Speed", speed);
+        animMovement.SetFloat("Speed", speed);
     
     }
     public void PlayMoveAnimation(bool idle)
     {
-        anim.SetBool("Idle", idle);
+        animMovement.SetBool("Idle", idle);
     }
 
     public void PlayMoveAnimation(float speed, bool idle)
     {
-        anim.SetFloat("Speed", speed);
+        animMovement.SetFloat("Speed", speed);
 
-        anim.SetBool("Idle", idle);
+        animMovement.SetBool("Idle", idle);
 
     }
 
@@ -81,51 +85,70 @@ public class CharacterAnimation : MonoBehaviour
     {
         animInputs = Vector2.Lerp(animInputs, inputs, animationSmoother * Time.deltaTime);
 
-        anim.SetFloat("Input_x", animInputs.x);
-        anim.SetFloat("Input_y", animInputs.y);
+        animMovement.SetFloat("Input_x", animInputs.x);
+        animMovement.SetFloat("Input_y", animInputs.y);
 
     }
 
 
     public void ChangeArmedState(bool aiming)
     {
-        anim.SetBool("Armed", aiming);
+        animMovement.SetBool("Armed", aiming);
     }
 
 
-    //Colocar a layer de arma ou sem
-    public void ChangeWeaponLayerWeight(bool weaponEquiped)
-    {
-        if (weaponEquiped)
-        {
-            anim.SetLayerWeight(1, 1f);
-        }
-        else
-        {
-            anim.SetLayerWeight(1, 0f);
-        }
-
-    }
-
-    //Setar as animações para arma mirando e pose
-    public IEnumerator SetEquipedWeaponAnimations(AnimationClip pose, AnimationClip aiming)
+    //Setar as animações de arma
+    public IEnumerator SetEquipedWeaponAnimations(AnimationClip holsterAim,  AnimationClip pose, AnimationClip aim, AnimationClip poseHolster)
     {
 
         yield return new WaitForSeconds(0.001f);
 
-        overrides["GunAnimationAimingEmpty"] = aiming;
+        overrides["GunAnimationHolsterAimEmpty"] = holsterAim;
 
         overrides["GunAnimationPoseEmpty"] = pose;
 
+        overrides["GunAnimationAimEmpty"] = aim;
+
+        overrides["GunAnimationPoseHolsterEmpty"] = poseHolster;
 
     }
 
     
+    public IEnumerator EquipWeapon()
+    {
+        animWeapon.SetTrigger("Equip");
+
+        Debug.Log(animWeapon.GetCurrentAnimatorClipInfo(0)[0].clip.name); //Não é o clipe tocando agora, e sim o primeiro clipe da lista de clipes, tem que achar um jeito de saber o tamanho do clipe atual
+        
+        yield return null;
+
+    }
+    
+    
+    public IEnumerator UnequipWeapon()
+    {
+
+        animWeapon.SetTrigger("Unequip");
+
+        Debug.Log(animWeapon.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+
+        yield return new WaitForSeconds(0.35f);
+
+
+    }
+
+
+    public void UnarmedAnimation()
+    {
+        animWeapon.Play("Unarmed");
+    }
+
+
     //Colocar a animação de arma mirando ou pose para rodar
 
     public void ChangeWeaponAimingAnimationsWeight(float weight)
     {
-        anim.SetFloat("Aiming", weight);
+        animWeapon.SetFloat("Aiming", weight);
     }
 
 

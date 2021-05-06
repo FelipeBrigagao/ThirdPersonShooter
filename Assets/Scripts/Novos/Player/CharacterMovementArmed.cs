@@ -6,7 +6,6 @@ public class CharacterMovementArmed : MonoBehaviour, ICharacterMovement
 {
     Rigidbody rb;
     Camera cam;
-    CharacterAnimation characAnim;
 
     Vector2 movementInputs;
     Vector3 direction;
@@ -26,7 +25,6 @@ public class CharacterMovementArmed : MonoBehaviour, ICharacterMovement
     {
         cam = Camera.main;
         rb = GetComponent<Rigidbody>();
-        characAnim = GetComponent<CharacterAnimation>();
 
     }
 
@@ -35,7 +33,7 @@ public class CharacterMovementArmed : MonoBehaviour, ICharacterMovement
         Move();
         ArmedState();
 
-        characAnim.PlayMoveAnimation(movementInputs);
+        CharacterAnimation.Instance.PlayMoveAnimation(movementInputs);
     }
 
     public void SetInput(Vector2 inputs)

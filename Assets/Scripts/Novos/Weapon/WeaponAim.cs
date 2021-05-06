@@ -45,6 +45,7 @@ public class WeaponAim : MonoBehaviour
             CharacterAnimation.Instance.ChangeWeaponAimingAnimationsWeight(weaponAimingRigLayer.weight);
 
         }
+      
     }
 
     private void OnDisable()

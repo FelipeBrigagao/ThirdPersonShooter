@@ -56,7 +56,7 @@ public class WeaponStats : MonoBehaviour
             TrailRenderer tracer = Instantiate(WeaponInfo.bulletTracer, firePoint.position, Quaternion.identity);
             tracer.AddPosition(firePoint.position);
 
-            Bullet bullet = new Bullet(bulletVelocity, firePoint.position, 0f, tracer, WeaponInfo.bulletDrop, (WeaponInfo.range/WeaponInfo.bulletSpeed));
+            Bullet bullet = new Bullet(bulletVelocity, firePoint.position, tracer, WeaponInfo.bulletDrop, (WeaponInfo.range/WeaponInfo.bulletSpeed));
 
             BulletsManager.Instance.AddBullet(bullet);
             

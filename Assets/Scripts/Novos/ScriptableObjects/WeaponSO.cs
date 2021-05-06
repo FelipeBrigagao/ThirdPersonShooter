@@ -19,11 +19,13 @@ public class WeaponSO : ObjectSO
 
     public WeaponType type;
 
-    public AnimationClip weaponAnimationPose;
+    public AnimationClip weaponAnimationHolsterAim;
 
-    public AnimationClip weaponAnimationAiming;
+    public AnimationClip weaponAnimationPoseHolster;
     
-    public AnimationClip weaponAnimationStored;
+    public AnimationClip weaponAnimationAim;
+
+    public AnimationClip weaponAnimationPose;
 
     public ParticleSystem muzzleFlash;
 

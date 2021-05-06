@@ -6,7 +6,6 @@ public class CharacterMovementUnnarmed : MonoBehaviour, ICharacterMovement
 {
     Rigidbody rb;
     Camera cam;
-    CharacterAnimation characAnim;
 
     Vector2 movementInputs;
     Vector3 direction;
@@ -35,7 +34,6 @@ public class CharacterMovementUnnarmed : MonoBehaviour, ICharacterMovement
     {
         cam = Camera.main;
         rb = GetComponent<Rigidbody>();
-        characAnim = GetComponent<CharacterAnimation>();
 
     }
 
@@ -45,7 +43,7 @@ public class CharacterMovementUnnarmed : MonoBehaviour, ICharacterMovement
         Move();
         UnnarmedState();
 
-        characAnim.PlayMoveAnimation(speed, idle);
+        CharacterAnimation.Instance.PlayMoveAnimation(speed, idle);
 
     }
 
