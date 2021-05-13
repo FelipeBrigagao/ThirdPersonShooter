@@ -118,8 +118,9 @@ public class CharacterAnimation : MonoBehaviour
     {
         animWeapon.SetTrigger("Equip");
 
+
         //Debug.Log(animWeapon.GetCurrentAnimatorClipInfo(0)[0].clip.name); //Não é o clipe tocando agora, e sim o primeiro clipe da lista de clipes, tem que achar um jeito de saber o tamanho do clipe atual
-        
+
     }
     
     
@@ -132,11 +133,6 @@ public class CharacterAnimation : MonoBehaviour
 
     }
 
-
-    public void UnarmedAnimation()
-    {
-        animWeapon.Play("Unarmed");
-    }
 
 
     //Colocar a animação de arma mirando ou pose para rodar

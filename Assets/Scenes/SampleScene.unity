@@ -316,6 +316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 103277616}
   - component: {fileID: 103277617}
+  - component: {fileID: 103277618}
   m_Layer: 0
   m_Name: Rig
   m_TagString: Untagged
@@ -363,6 +364,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &103277618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103277615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e035df726ac1b4cb9e29656f8818ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &127083952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1770,15 +1783,10 @@ MonoBehaviour:
   crossHairTarget: {fileID: 791349103}
   equipedWeaponPivot: {fileID: 1844893127}
   primaryWeaponPivot: {fileID: 1228621784}
-  secundaryWeaponPivot: {fileID: 0}
+  secundaryWeaponPivot: {fileID: 335480900}
   weaponIsEquiped: 0
-  handsIKRig: {fileID: 1025771386}
-  weaponPoseRigLayer: {fileID: 447018906}
-  rightHandPosition: {fileID: 903564305}
-  rightHandHint: {fileID: 2097505186}
-  leftHandPosition: {fileID: 1350556050}
-  leftHandHint: {fileID: 489431946}
-  player: {fileID: 1268559910252248}
+  unarmed: 0
+  weaponAimingRigLayer: {fileID: 797589864}
 --- !u!1 &903564304
 GameObject:
   m_ObjectHideFlags: 0
@@ -2058,6 +2066,7 @@ Transform:
   - {fileID: 847514353}
   - {fileID: 1401462777}
   - {fileID: 1945795205}
+  - {fileID: 1513799204}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2252,7 +2261,7 @@ GameObject:
   - component: {fileID: 1152904857}
   - component: {fileID: 1152904856}
   m_Layer: 5
-  m_Name: Image
+  m_Name: CrossHairDotUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2290,7 +2299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2811,6 +2820,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48948dfe9d76b07488dacd46a7955fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1513799203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1513799204}
+  - component: {fileID: 1513799205}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1513799204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513799203}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1019944662}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1513799205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513799203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40f2324c562402247a7d28a80c9846c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshairDot: {fileID: 1152904856}
+  crosshairAlphaSpeed: 0.1
 --- !u!1 &1542269227
 GameObject:
   m_ObjectHideFlags: 0
@@ -3351,7 +3405,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834169233}
-  m_LocalRotation: {x: -0.35329008, y: 0.5983995, z: 0.33121678, w: 0.6382787}
+  m_LocalRotation: {x: -0.3540288, y: 0.5969727, z: 0.33042702, w: 0.63961333}
   m_LocalPosition: {x: 0, y: 0.292, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

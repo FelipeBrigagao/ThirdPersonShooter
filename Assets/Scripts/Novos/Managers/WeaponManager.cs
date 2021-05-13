@@ -63,47 +63,27 @@ public class WeaponManager : MonoBehaviour
 
     public bool weaponIsEquiped;
 
-
-    [Header("Animation poses instances")]
-    
     [SerializeField]
-    Rig handsIKRig;
+    bool unarmed;
 
     [SerializeField]
-    Rig weaponPoseRigLayer;
+    Rig weaponAimingRigLayer;
 
-    [SerializeField]
-    Transform rightHandPosition;
 
-    [SerializeField]
-    Transform rightHandHint;
-
-    [SerializeField]
-    Transform leftHandPosition;
-
-    [SerializeField]
-    Transform leftHandHint;
-
-    [SerializeField]
-    GameObject player;
 
 
 
     private void Start()
     {
+        weaponIsEquiped = false;
+
+        unarmed = true;
+
         weapons = new WeaponStats[2];
 
         WeaponStats weaponEquiped = equipedWeaponPivot.GetComponentInChildren<WeaponStats>();
 
-        WeaponStats[] weaponsUnequiped = primaryWeaponPivot.GetComponentsInChildren<WeaponStats>();
-
         Equip(weaponEquiped);
-
-        foreach(WeaponStats w in weaponsUnequiped)
-        {
-            Unequip(w);
-        }
-
 
     }
 
@@ -127,83 +107,101 @@ public class WeaponManager : MonoBehaviour
 
     void Equip(WeaponStats weapon)
     {
-        //Se a arma a equipar for igual a equipada não se equipa nada, mas se desequipa a atual
-        if(weapon == equipedWeapon)
-        {
-            weapon = null;
-        }
-
 
         if (weaponIsEquiped)
         {
-           //Destroy(equipedWeapon.gameObject);
+            //Se a arma a equipar for igual a equipada não se equipa nada, mas se desequipa a atual
+            if(weapon == equipedWeapon)
+            {
+                weapon = null;
+            }
 
+           //Destroy(equipedWeapon.gameObject);
            Unequip(equipedWeapon);
+
+            weaponIsEquiped = false;
         }
 
 
+        //Tem que esperar o unequip terminar para continuar e sobrescrever as animações
 
         if(weapon != null)
         {
-            weapon.crossHairTarget = this.crossHairTarget;
-           
-            StartCoroutine(CharacterAnimation.Instance.SetEquipedWeaponAnimations(weapon.WeaponInfo.weaponAnimationHolsterAim, weapon.WeaponInfo.weaponAnimationPose, weapon.WeaponInfo.weaponAnimationAim, weapon.WeaponInfo.weaponAnimationPoseHolster));        //Troca as animações de pose do animator para as 
-
-            //tocar a animação de equipar a arma
-            CharacterAnimation.Instance.EquipWeapon();
-
-            if(weapon.WeaponInfo.type == WeaponType.Primary)
-            {
-                weapon.transform.SetParent(primaryWeaponPivot);
-
-            }
-            else
-            {
-                weapon.transform.SetParent(secundaryWeaponPivot);
-
-            }
-
-            weapon.transform.localPosition = weapon.WeaponInfo.posesInfo.pivotPosition;                                         //Deixar arma no pivot
-            weapon.transform.localRotation = Quaternion.Euler(weapon.WeaponInfo.posesInfo.pivotRotation);
-
-            weaponIsEquiped = true;
-
+            StartCoroutine(EquipWaiting(weapon));                           //com o uso dessa coroutine o jogo vai esperar terminar a animação (event dentro da animação avisa o termino dela) para se trocar as animações da arma que irá equipar
 
         }
         else
         {
-            weaponIsEquiped = false;
-
-            // colocar animação de unarmed?
-
+             equipedWeapon = weapon;
         }
 
 
-        equipedWeapon = weapon;
 
     }
 
-    void Unequip(WeaponStats weapon)
+
+
+    
+
+    IEnumerator EquipWaiting(WeaponStats equipingWeapon)
     {
 
-        PlayerManager.Instance.CallChangeAimState(false);
+        yield return new WaitUntil(() => unarmed);          // Vai esperar até a não ter uma arma equipada para se equipar a próxima
 
-        if (weapon != null)
+
+        equipingWeapon.crossHairTarget = this.crossHairTarget;
+
+        StartCoroutine(CharacterAnimation.Instance.SetEquipedWeaponAnimations(equipingWeapon.WeaponInfo.weaponAnimationHolsterAim, equipingWeapon.WeaponInfo.weaponAnimationPose, equipingWeapon.WeaponInfo.weaponAnimationAim, equipingWeapon.WeaponInfo.weaponAnimationPoseHolster));        //Troca as animações de pose do animator para as 
+
+        //tocar a animação de equipar a arma
+        CharacterAnimation.Instance.EquipWeapon();
+
+        if (equipingWeapon.WeaponInfo.type == WeaponType.Primary)
+        {
+            equipingWeapon.transform.SetParent(primaryWeaponPivot);
+
+        }
+        else
+        {
+            equipingWeapon.transform.SetParent(secundaryWeaponPivot);
+
+        }
+
+        equipingWeapon.transform.localPosition = equipingWeapon.WeaponInfo.posesInfo.pivotPosition;                                         //Deixar arma no pivot
+        equipingWeapon.transform.localRotation = Quaternion.Euler(equipingWeapon.WeaponInfo.posesInfo.pivotRotation);
+
+        weaponIsEquiped = true;
+
+        equipedWeapon = equipingWeapon;
+
+    }
+
+
+
+
+
+
+    void Unequip(WeaponStats unequipingWeapon)
+    {
+
+        PlayerManager.Instance.CallChangeAimState(false);   //Tirar a pose de mirando quando a arma é desequipada
+
+        if (unequipingWeapon != null)
         {
 
             // toca a animação de desarmar, o equipedPivot vai ficar no lugar onde a arma deve ficar guardada, colocar o pivot de unarmed com os valores do equiped
             CharacterAnimation.Instance.UnequipWeapon();
 
 
-            if (weapon.WeaponInfo.type == WeaponType.Primary)
+            if (unequipingWeapon.WeaponInfo.type == WeaponType.Primary)
             {
-                weapons[0] = weapon;
+                weapons[0] = unequipingWeapon;
 
                
             }
             else
             {
-                weapons[1] = weapon;
+                weapons[1] = unequipingWeapon;
 
                 
             }
@@ -217,9 +215,24 @@ public class WeaponManager : MonoBehaviour
 
 
 
+    public void ChangeUnarmedStatToFalse()
+    {
+        unarmed = false;
+    }
+
+    public void ChangeUnarmedStatToTrue()
+    {
+        unarmed = true;
+    }
+
+
     public void WeaponShootInputs()
     {
-        equipedWeapon.Shoot();
+        if(weaponAimingRigLayer.weight >= 1)
+        {
+            equipedWeapon.Shoot();
+
+        }
 
     }
 

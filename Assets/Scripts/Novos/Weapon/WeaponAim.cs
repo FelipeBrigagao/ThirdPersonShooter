@@ -26,26 +26,20 @@ public class WeaponAim : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        
-    }
-
-
     private void FixedUpdate()
     {
-        if (aiming && weaponAimingRigLayer.weight < 1)
-        {
-            weaponAimingRigLayer.weight += Time.deltaTime / aimingSpeed;
-            CharacterAnimation.Instance.ChangeWeaponAimingAnimationsWeight(weaponAimingRigLayer.weight);                                      //Altera entre as animações de pose com a arma mirando ou não
+          if (aiming && weaponAimingRigLayer.weight < 1)
+          {
+              weaponAimingRigLayer.weight += Time.deltaTime / aimingSpeed;
+              CharacterAnimation.Instance.ChangeWeaponAimingAnimationsWeight(weaponAimingRigLayer.weight);                                      //Altera entre as animações de pose com a arma mirando ou não
 
-        }else if (!aiming && weaponAimingRigLayer.weight > 0)
-        {
-            weaponAimingRigLayer.weight -= Time.deltaTime / aimingSpeed;
-            CharacterAnimation.Instance.ChangeWeaponAimingAnimationsWeight(weaponAimingRigLayer.weight);
+          }else if (!aiming && weaponAimingRigLayer.weight > 0)
+          {
+              weaponAimingRigLayer.weight -= Time.deltaTime / aimingSpeed;
+              CharacterAnimation.Instance.ChangeWeaponAimingAnimationsWeight(weaponAimingRigLayer.weight);
 
-        }
-      
+          }
+
     }
 
     private void OnDisable()

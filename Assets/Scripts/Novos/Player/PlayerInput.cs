@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -60,7 +61,7 @@ public class PlayerInput : MonoBehaviour
 
 
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) )
         {
            WeaponManager.Instance.WeaponShootInputs();
         }
