@@ -12,7 +12,12 @@ public class PlayerInput : MonoBehaviour
     {
         MoveInput();
 
-        ChangeWeapon();
+        if (!WeaponManager.Instance.changingWeapons)
+        {
+            ChangeWeapon();
+
+        }
+
 
         if (WeaponManager.Instance.weaponIsEquiped)
         {

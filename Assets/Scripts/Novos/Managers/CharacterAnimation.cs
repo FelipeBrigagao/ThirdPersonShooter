@@ -114,21 +114,38 @@ public class CharacterAnimation : MonoBehaviour
     }
 
     
-    public void EquipWeapon()
+    public IEnumerator EquipWeapon()
     {
         animWeapon.SetTrigger("Equip");
 
+        yield return new WaitForSeconds(1f);
+        /*
+        do
+        {
+            yield return new WaitForEndOfFrame();
+
+        } while (animWeapon.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
+        */
 
         //Debug.Log(animWeapon.GetCurrentAnimatorClipInfo(0)[0].clip.name); //Não é o clipe tocando agora, e sim o primeiro clipe da lista de clipes, tem que achar um jeito de saber o tamanho do clipe atual
 
     }
-    
-    
-    public void UnequipWeapon()
+
+
+    public IEnumerator UnequipWeapon()
     {
 
         animWeapon.SetTrigger("Unequip");
 
+        yield return new WaitForSeconds(1f);
+        /*
+        do
+        {
+            yield return new WaitForEndOfFrame();
+
+        } while (animWeapon.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
+        */
+        
        // Debug.Log(animWeapon.GetCurrentAnimatorClipInfo(0)[0].clip.name);
 
     }

@@ -63,8 +63,7 @@ public class WeaponManager : MonoBehaviour
 
     public bool weaponIsEquiped;
 
-    [SerializeField]
-    bool unarmed;
+    public bool changingWeapons;
 
     [SerializeField]
     Rig weaponAimingRigLayer;
@@ -77,13 +76,17 @@ public class WeaponManager : MonoBehaviour
     {
         weaponIsEquiped = false;
 
-        unarmed = true;
+        changingWeapons = false;
 
         weapons = new WeaponStats[2];
 
         WeaponStats weaponEquiped = equipedWeaponPivot.GetComponentInChildren<WeaponStats>();
+        
+        if (weaponEquiped)
+        {
+            StartCoroutine(Equip(weaponEquiped));
 
-        Equip(weaponEquiped);
+        }
 
     }
 
@@ -91,22 +94,25 @@ public class WeaponManager : MonoBehaviour
 
     public void ChangeEquipedWeapon(int weaponSlot)
     {
-        Equip(weapons[weaponSlot]);
+        StartCoroutine(ChangeWeapons(weapons[weaponSlot]));
 
     }
 
 
     public void AddNewWeapon(WeaponStats weapon)
     {
-        Equip(weapon);
+        
+        StartCoroutine(ChangeWeapons(weapon));
 
-        weapons[(int)weapon.WeaponInfo.type] = equipedWeapon;
+        weapons[(int)weapon.WeaponInfo.type] = weapon;
 
     }
 
 
-    void Equip(WeaponStats weapon)
+    IEnumerator ChangeWeapons(WeaponStats weapon)
     {
+
+        changingWeapons = true;
 
         if (weaponIsEquiped)
         {
@@ -117,9 +123,9 @@ public class WeaponManager : MonoBehaviour
             }
 
            //Destroy(equipedWeapon.gameObject);
-           Unequip(equipedWeapon);
+           yield return StartCoroutine(Unequip(equipedWeapon));
+            Debug.Log("Depois de unequip");
 
-            weaponIsEquiped = false;
         }
 
 
@@ -127,8 +133,9 @@ public class WeaponManager : MonoBehaviour
 
         if(weapon != null)
         {
-            StartCoroutine(EquipWaiting(weapon));                           //com o uso dessa coroutine o jogo vai esperar terminar a animação (event dentro da animação avisa o termino dela) para se trocar as animações da arma que irá equipar
-
+            yield return StartCoroutine(Equip(weapon));                           //com o uso dessa coroutine o jogo vai esperar terminar a animação para se trocar as animações da arma que irá equipar
+           
+            Debug.Log("Depois de equip");
         }
         else
         {
@@ -136,6 +143,7 @@ public class WeaponManager : MonoBehaviour
         }
 
 
+        changingWeapons = false;
 
     }
 
@@ -143,18 +151,15 @@ public class WeaponManager : MonoBehaviour
 
     
 
-    IEnumerator EquipWaiting(WeaponStats equipingWeapon)
+    IEnumerator Equip(WeaponStats equipingWeapon)
     {
 
-        yield return new WaitUntil(() => unarmed);          // Vai esperar até a não ter uma arma equipada para se equipar a próxima
+        yield return StartCoroutine(CharacterAnimation.Instance.SetEquipedWeaponAnimations(equipingWeapon.WeaponInfo.weaponAnimationHolsterAim, equipingWeapon.WeaponInfo.weaponAnimationPose, equipingWeapon.WeaponInfo.weaponAnimationAim, equipingWeapon.WeaponInfo.weaponAnimationPoseHolster));        //Troca as animações de pose do animator para as da próxima arma
+        Debug.Log("Depois de change animations");
 
 
         equipingWeapon.crossHairTarget = this.crossHairTarget;
 
-        StartCoroutine(CharacterAnimation.Instance.SetEquipedWeaponAnimations(equipingWeapon.WeaponInfo.weaponAnimationHolsterAim, equipingWeapon.WeaponInfo.weaponAnimationPose, equipingWeapon.WeaponInfo.weaponAnimationAim, equipingWeapon.WeaponInfo.weaponAnimationPoseHolster));        //Troca as animações de pose do animator para as 
-
-        //tocar a animação de equipar a arma
-        CharacterAnimation.Instance.EquipWeapon();
 
         if (equipingWeapon.WeaponInfo.type == WeaponType.Primary)
         {
@@ -170,6 +175,12 @@ public class WeaponManager : MonoBehaviour
         equipingWeapon.transform.localPosition = equipingWeapon.WeaponInfo.posesInfo.pivotPosition;                                         //Deixar arma no pivot
         equipingWeapon.transform.localRotation = Quaternion.Euler(equipingWeapon.WeaponInfo.posesInfo.pivotRotation);
 
+
+        //tocar a animação de equipar a arma
+        yield return StartCoroutine(CharacterAnimation.Instance.EquipWeapon());
+
+        Debug.Log("Depois de equip weapon");
+        
         weaponIsEquiped = true;
 
         equipedWeapon = equipingWeapon;
@@ -181,7 +192,7 @@ public class WeaponManager : MonoBehaviour
 
 
 
-    void Unequip(WeaponStats unequipingWeapon)
+    IEnumerator Unequip(WeaponStats unequipingWeapon)
     {
 
         PlayerManager.Instance.CallChangeAimState(false);   //Tirar a pose de mirando quando a arma é desequipada
@@ -189,41 +200,17 @@ public class WeaponManager : MonoBehaviour
         if (unequipingWeapon != null)
         {
 
+            weaponIsEquiped = false;
+
             // toca a animação de desarmar, o equipedPivot vai ficar no lugar onde a arma deve ficar guardada, colocar o pivot de unarmed com os valores do equiped
-            CharacterAnimation.Instance.UnequipWeapon();
-
-
-            if (unequipingWeapon.WeaponInfo.type == WeaponType.Primary)
-            {
-                weapons[0] = unequipingWeapon;
-
-               
-            }
-            else
-            {
-                weapons[1] = unequipingWeapon;
-
-                
-            }
-
-
+            yield return StartCoroutine(CharacterAnimation.Instance.UnequipWeapon());
+            Debug.Log("Depois de unequip weapon");
 
 
         }
        
     }
 
-
-
-    public void ChangeUnarmedStatToFalse()
-    {
-        unarmed = false;
-    }
-
-    public void ChangeUnarmedStatToTrue()
-    {
-        unarmed = true;
-    }
 
 
     public void WeaponShootInputs()

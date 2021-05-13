@@ -316,7 +316,6 @@ GameObject:
   m_Component:
   - component: {fileID: 103277616}
   - component: {fileID: 103277617}
-  - component: {fileID: 103277618}
   m_Layer: 0
   m_Name: Rig
   m_TagString: Untagged
@@ -364,18 +363,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &103277618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 103277615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48e035df726ac1b4cb9e29656f8818ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &127083952
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,7 +818,6 @@ GameObject:
   m_Component:
   - component: {fileID: 335480900}
   - component: {fileID: 335480902}
-  - component: {fileID: 335480901}
   m_Layer: 0
   m_Name: SecundaryWeaponPivot
   m_TagString: Untagged
@@ -853,55 +839,6 @@ Transform:
   m_Father: {fileID: 2096805723}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &335480901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335480899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c10bdb03db33fb148b858a4a3b646cea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 1
-  m_Data:
-    m_ConstrainedObject: {fileID: 1073725837}
-    m_SourceObjects:
-      m_Length: 1
-      m_Item0:
-        transform: {fileID: 4241149063393142}
-        weight: 1
-      m_Item1:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item2:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item3:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item4:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item5:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item6:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item7:
-        transform: {fileID: 0}
-        weight: 0
-    m_Offset: {x: 0, y: 0, z: 0}
-    m_ConstrainedAxes:
-      x: 1
-      y: 1
-      z: 1
-    m_MaintainOffset: 1
-  m_SourceObjectsGUIToggle: 1
-  m_SettingsGUIToggle: 0
 --- !u!114 &335480902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2333,7 +2270,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1228621784}
   - component: {fileID: 1228621786}
-  - component: {fileID: 1228621785}
   m_Layer: 0
   m_Name: PrimaryWeaponPivot
   m_TagString: Untagged
@@ -2355,55 +2291,6 @@ Transform:
   m_Father: {fileID: 2096805723}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1228621785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1228621783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c10bdb03db33fb148b858a4a3b646cea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 1
-  m_Data:
-    m_ConstrainedObject: {fileID: 1073725837}
-    m_SourceObjects:
-      m_Length: 1
-      m_Item0:
-        transform: {fileID: 4241149063393142}
-        weight: 1
-      m_Item1:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item2:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item3:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item4:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item5:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item6:
-        transform: {fileID: 0}
-        weight: 0
-      m_Item7:
-        transform: {fileID: 0}
-        weight: 0
-    m_Offset: {x: 0, y: 0, z: 0}
-    m_ConstrainedAxes:
-      x: 1
-      y: 1
-      z: 1
-    m_MaintainOffset: 1
-  m_SourceObjectsGUIToggle: 1
-  m_SettingsGUIToggle: 0
 --- !u!114 &1228621786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3405,7 +3292,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834169233}
-  m_LocalRotation: {x: -0.3540288, y: 0.5969727, z: 0.33042702, w: 0.63961333}
+  m_LocalRotation: {x: -0.35396454, y: 0.59709704, z: 0.33049583, w: 0.6394973}
   m_LocalPosition: {x: 0, y: 0.292, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
