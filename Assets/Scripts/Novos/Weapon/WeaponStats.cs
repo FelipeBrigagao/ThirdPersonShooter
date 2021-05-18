@@ -11,7 +11,7 @@ public class WeaponStats : MonoBehaviour
     Transform firePoint;
 
 
-    public Transform crossHairTarget;
+    Transform crossHairTarget;
 
 
     [SerializeField]
@@ -41,6 +41,10 @@ public class WeaponStats : MonoBehaviour
 
     }
 
+    public void SetCrossHairTarget(Transform cht)
+    {
+        this.crossHairTarget = cht;
+    }
 
     public void Shoot()
     {

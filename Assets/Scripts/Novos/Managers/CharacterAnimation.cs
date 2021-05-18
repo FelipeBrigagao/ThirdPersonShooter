@@ -119,6 +119,7 @@ public class CharacterAnimation : MonoBehaviour
         animWeapon.SetTrigger("Equip");
 
         yield return new WaitForSeconds(1f);
+
         /*
         do
         {
@@ -138,6 +139,7 @@ public class CharacterAnimation : MonoBehaviour
         animWeapon.SetTrigger("Unequip");
 
         yield return new WaitForSeconds(1f);
+
         /*
         do
         {
@@ -147,6 +149,13 @@ public class CharacterAnimation : MonoBehaviour
         */
         
        // Debug.Log(animWeapon.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+
+    }
+
+    public void PlayUnarmedAnimation()
+    {
+        animWeapon.Play("Unarmed");
+
 
     }
 

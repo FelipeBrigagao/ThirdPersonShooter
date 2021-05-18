@@ -7,18 +7,7 @@ public class ObjectSO : ScriptableObject                                        
 {
     new public string name = "New Object";
 
-    public ParticleSystem impactEffect;
-
-
-
-    public void SpawnParticles(Vector3 position, Quaternion direction)                                                      //Método utilizado para emissão das particulas
-    {
-        ParticleSystem imp = Instantiate(impactEffect, position, direction);
-
-        Destroy(imp.gameObject, 2f);
-
-    }
-
+    public ParticleEffectType particleEffectType;
 
 
 }

@@ -12,7 +12,7 @@ public class WeaponPickUp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             WeaponStats weapon =  Instantiate(weaponPrefab);
-            WeaponManager.Instance.AddNewWeapon(weapon);
+            StartCoroutine(WeaponManager.Instance.EquipNewWeapon(weapon));
         }
     }
 

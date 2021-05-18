@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: Tree
   m_EditorClassIdentifier: 
   name: Tree
-  impactEffect: {fileID: 5625269361953344393, guid: 2023313537a9062429ba044886356289,
-    type: 3}
+  particleEffectType: 1

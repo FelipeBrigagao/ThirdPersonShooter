@@ -106,7 +106,7 @@ public class BulletsManager : MonoBehaviour
                                                                                             //O método de instanciação está no alvo atingido
             if (obj != null)
             {
-                obj.objInfo.SpawnParticles(hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                ParticlesManager.Instance.SpawnParticles(hitInfo.point, Quaternion.LookRotation(hitInfo.normal), obj.objInfo.particleEffectType);
 
             }
 
