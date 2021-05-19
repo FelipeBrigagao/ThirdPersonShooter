@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ParticlesManager : MonoBehaviour
 {
@@ -42,11 +43,13 @@ public class ParticlesManager : MonoBehaviour
     #endregion
 
     [SerializeField]
-    ParticleSystem[] impactEffect = new ParticleSystem[2];
+    ParticleSystem[] impactEffect = new ParticleSystem[Enum.GetValues(typeof(ParticleEffectType)).Length];
 
 
     public void SpawnParticles(Vector3 position, Quaternion direction, ParticleEffectType pet)                                                      //Método utilizado para emissão das particulas
     {
+        
+
         ParticleSystem imp = Instantiate(impactEffect[(int)pet], position, direction);
 
         Destroy(imp.gameObject, 2f);
