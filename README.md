@@ -4,7 +4,7 @@
 
 Sobre:
 =========================
-*Geral:
+-Geral:
 
 O projeto foi realizado com base em um tutorial provido no YouTube pelo canal KiwiCoder, porem este foi modificado para fosse possivel a aplicação de uma variedade maior de mecânicas e melhor modularizado, de modo que partes do código possam ser reutilizadas em projetos futuros.
 
@@ -12,7 +12,7 @@ O projeto consta com cada arma sendo totalmente customizavel por meio de seu scr
 
 Para a realização da animação de cada arma se utilizou de um rig builder, que anima diretamente o rig do personagem com posntos especificos da arma, como o grip, posição de arma desequipada, arma sem mirar e arma mirando. Com a troca de armas as animações que são tocadas são substituidas por um animation controller override, onde de inicio se tem as animações vazias, e assim que uma arma é equipada suas respectivas animações sobrescrevem as anteriores.
 
-*Assets:
+-Assets:
 
 Os assets utilizados para esse projetos foram baixados da Unity Asset Store, esses são:
   
